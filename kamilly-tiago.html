@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kamilly & Tiago — Lista de Presentes</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --m1: #3d0e1f;
+    --m2: #6b2238;
+    --m3: #9e3d52;
+    --m4: #c4687d;
+    --m5: #dda0ad;
+    --m6: #f2dde2;
+    --m7: #fdf6f8;
+    --gold: #c9a055;
+    --gold2: #e8d0a0;
+    --white: #fff9f7;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--m7);
+    color: var(--m1);
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ─── BACKGROUND ─── */
+  .bg-layer {
+    position: fixed; inset: 0; z-index: -3;
+    background:
+      radial-gradient(ellipse 80% 60% at 10% -10%, rgba(158,61,82,0.13) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 90% 110%, rgba(107,34,56,0.12) 0%, transparent 55%),
+      radial-gradient(ellipse 100% 80% at 50% 50%, rgba(242,221,226,0.6) 0%, transparent 80%),
+      linear-gradient(170deg, #fff9f7 0%, #faeef3 35%, #f2dde2 70%, #e8ccd5 100%);
+  }
+
+  .bg-grain {
+    position: fixed; inset: 0; z-index: -2; opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 200px;
+    pointer-events: none;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 24px;
+    position: relative;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 10px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 300;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: rise 1.2s cubic-bezier(.16,1,.3,1) forwards .2s;
+  }
+
+  .hero-badge::before, .hero-badge::after {
+    content: '';
+    display: block;
+    width: 30px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold));
+  }
+  .hero-badge::after { background: linear-gradient(90deg, var(--gold), transparent); }
+
+  .hero-names {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(64px, 15vw, 130px);
+    font-weight: 300;
+    line-height: 0.88;
+    color: var(--m1);
+    letter-spacing: -2px;
+    opacity: 0;
+    animation: rise 1.4s cubic-bezier(.16,1,.3,1) forwards .4s;
+  }
+
+  .hero-names .amp {
+    display: block;
+    font-style: italic;
+    font-size: 0.55em;
+    color: var(--m3);
+    letter-spacing: 2px;
+    line-height: 1.2;
+  }
+
+  .hero-names .n2 {
+    display: block;
+  }
+
+  .hero-line {
+    width: 1px;
+    height: 64px;
+    background: linear-gradient(180deg, var(--gold), transparent);
+    margin: 36px auto;
+    opacity: 0;
+    animation: rise 1s ease forwards .7s;
+  }
+
+  .hero-date-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(18px, 3vw, 26px);
+    color: var(--m3);
+    font-weight: 300;
+    letter-spacing: 1px;
+    opacity: 0;
+    animation: rise 1s ease forwards .9s;
+  }
+
+  /* ─── COUNTDOWN ─── */
+  .countdown-wrap {
+    margin-top: 52px;
+    opacity: 0;
+    animation: rise 1s ease forwards 1.1s;
+  }
+
+  .countdown-label {
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--m4);
+    font-weight: 300;
+    margin-bottom: 20px;
+  }
+
+  .countdown {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .cd-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    min-width: 72px;
+  }
+
+  .cd-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(38px, 7vw, 58px);
+    font-weight: 300;
+    color: var(--m2);
+    line-height: 1;
+    background: rgba(255,249,247,0.7);
+    border: 1px solid rgba(196,104,125,0.18);
+    border-radius: 16px;
+    padding: 10px 16px;
+    min-width: 72px;
+    text-align: center;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 20px rgba(61,14,31,0.06);
+    transition: all 0.4s ease;
+  }
+
+  .cd-lbl {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--m4);
+    font-weight: 300;
+  }
+
+  .cd-sep {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 40px;
+    color: var(--m5);
+    line-height: 1;
+    align-self: flex-start;
+    margin-top: 10px;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: rise 1s ease forwards 1.6s;
+  }
+
+  .scroll-hint span {
+    font-size: 9px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--m4);
+    font-weight: 300;
+  }
+
+  .scroll-arrow {
+    width: 1px; height: 40px;
+    background: linear-gradient(180deg, var(--m4), transparent);
+    animation: pulse-down 2s ease infinite;
+  }
+
+  @keyframes pulse-down {
+    0%, 100% { opacity: 0.4; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.1); }
+  }
+
+  /* ─── SECTION ─── */
+  .section {
+    padding: 80px 20px;
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+
+  .sec-head {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .sec-eyebrow {
+    font-size: 10px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 300;
+    margin-bottom: 12px;
+  }
+
+  .sec-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 6vw, 60px);
+    font-weight: 300;
+    color: var(--m1);
+    line-height: 1;
+  }
+
+  /* ─── PIX CARD ─── */
+  .pix-wrap { max-width: 560px; margin: 0 auto; }
+
+  .pix-card {
+    background: linear-gradient(140deg, var(--m1) 0%, var(--m2) 60%, #4e1528 100%);
+    border-radius: 28px;
+    padding: 48px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 24px 80px rgba(61,14,31,0.3), inset 0 1px 0 rgba(255,255,255,0.08);
+  }
+
+  .pix-card::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,160,85,0.12), transparent 70%);
+  }
+
+  .pix-card::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; left: -60px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.04), transparent 70%);
+  }
+
+  .pix-heart { font-size: 28px; margin-bottom: 16px; position: relative; z-index: 1; }
+
+  .pix-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 34px;
+    font-weight: 300;
+    color: var(--gold2);
+    margin-bottom: 6px;
+    position: relative; z-index: 1;
+  }
+
+  .pix-card > p {
+    font-size: 13px;
+    font-weight: 200;
+    color: rgba(221,160,173,0.65);
+    letter-spacing: 1px;
+    margin-bottom: 32px;
+    position: relative; z-index: 1;
+  }
+
+  .pix-box {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(201,160,85,0.25);
+    border-radius: 16px;
+    padding: 22px 28px;
+    margin-bottom: 22px;
+    position: relative; z-index: 1;
+  }
+
+  .pix-box-label {
+    font-size: 9px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+    display: block;
+    font-weight: 300;
+  }
+
+  .pix-box-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    color: var(--white);
+    font-weight: 300;
+    word-break: break-all;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+  }
+
+  .pix-copy {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--gold);
+    color: var(--m1);
+    border: none;
+    border-radius: 50px;
+    padding: 13px 30px;
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative; z-index: 1;
+  }
+
+  .pix-copy:hover {
+    background: var(--gold2);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(201,160,85,0.5);
+  }
+
+  .pix-copied {
+    font-size: 12px;
+    color: rgba(221,160,173,0.7);
+    letter-spacing: 1px;
+    margin-top: 14px;
+    height: 18px;
+    position: relative; z-index: 1;
+    transition: opacity 0.3s;
+  }
+
+  .pix-favored {
+    margin-top: 20px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: rgba(221,160,173,0.45);
+    position: relative; z-index: 1;
+  }
+
+  /* ─── GIFT GRID ─── */
+  .gifts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  .gift-card {
+    background: rgba(253,246,248,0.88);
+    border: 1px solid rgba(196,104,125,0.14);
+    border-radius: 22px;
+    overflow: hidden;
+    transition: transform 0.35s cubic-bezier(.16,1,.3,1), box-shadow 0.35s ease;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 2px 16px rgba(61,14,31,0.05);
+    animation: rise 0.6s cubic-bezier(.16,1,.3,1) both;
+  }
+
+  .gift-card:hover {
+    transform: translateY(-8px) scale(1.01);
+    box-shadow: 0 24px 56px rgba(61,14,31,0.13);
+  }
+
+  /* ─── GIFT IMAGE ─── */
+  .gift-img-wrap {
+    width: 100%;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--m6) 0%, #eedde3 100%);
+    position: relative;
+  }
+
+  .gift-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(.16,1,.3,1);
+    display: block;
+  }
+
+  .gift-card:hover .gift-img-wrap img {
+    transform: scale(1.06);
+  }
+
+  .gift-img-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .gift-img-placeholder svg {
+    width: 36px; height: 36px;
+    stroke: rgba(196,104,125,0.35);
+    fill: none;
+    stroke-width: 1.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .gift-img-placeholder span {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(196,104,125,0.35);
+    font-weight: 300;
+  }
+
+  .gift-inner { padding: 22px 24px 20px; }
+
+  .gift-cat {
+    font-size: 9px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--m4);
+    font-weight: 300;
+    margin-bottom: 8px;
+  }
+
+  .gift-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--m1);
+    line-height: 1.15;
+    margin-bottom: 8px;
+  }
+
+  .gift-desc {
+    font-size: 13px;
+    font-weight: 200;
+    color: var(--m3);
+    line-height: 1.65;
+    margin-bottom: 18px;
+  }
+
+  .gift-foot {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(196,104,125,0.1);
+  }
+
+  .gift-actions { display: flex; gap: 8px; align-items: center; }
+
+  .btn-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, var(--m2), var(--m1));
+    color: var(--white);
+    text-decoration: none;
+    border-radius: 50px;
+    padding: 10px 20px;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 300;
+    transition: all 0.3s ease;
+  }
+
+  .btn-link:hover {
+    background: linear-gradient(135deg, var(--m3), var(--m2));
+    transform: translateX(2px);
+    box-shadow: 0 6px 20px rgba(61,14,31,0.2);
+  }
+
+  .btn-link svg { width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* ─── IMAGE UPLOAD IN ADMIN ─── */
+  .img-upload-area {
+    border: 2px dashed rgba(196,104,125,0.3);
+    border-radius: 16px;
+    padding: 28px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: rgba(255,255,255,0.5);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .img-upload-area:hover {
+    border-color: var(--m3);
+    background: rgba(255,255,255,0.8);
+  }
+
+  .img-upload-area.has-img {
+    padding: 0;
+    border-style: solid;
+    border-color: rgba(196,104,125,0.2);
+  }
+
+  .img-upload-area.has-img img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 14px;
+    display: block;
+  }
+
+  .img-upload-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(61,14,31,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+    border-radius: 14px;
+  }
+
+  .img-upload-area.has-img:hover .img-upload-overlay { opacity: 1; }
+
+  .img-upload-overlay span {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--white);
+    font-weight: 300;
+  }
+
+  .img-upload-icon svg {
+    width: 28px; height: 28px;
+    stroke: rgba(196,104,125,0.5);
+    fill: none;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    margin-bottom: 8px;
+  }
+
+  .img-upload-text {
+    font-size: 12px;
+    color: var(--m4);
+    font-weight: 200;
+    letter-spacing: 1px;
+  }
+
+  .img-upload-hint {
+    font-size: 10px;
+    color: var(--m5);
+    margin-top: 4px;
+    font-weight: 200;
+  }
+
+  #f-img-input { display: none; }
+
+  /* ─── ADMIN PANEL ─── */
+  .admin-trigger {
+    position: fixed;
+    bottom: 28px; right: 28px;
+    width: 50px; height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--m2), var(--m1));
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 8px 28px rgba(61,14,31,0.35);
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 100;
+  }
+
+  .admin-trigger:hover {
+    transform: scale(1.1) rotate(15deg);
+    box-shadow: 0 12px 36px rgba(61,14,31,0.45);
+  }
+
+  .admin-trigger svg { width: 20px; height: 20px; stroke: var(--gold2); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* ─── MODAL ─── */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(61,14,31,0.6);
+    backdrop-filter: blur(8px);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--m7);
+    border-radius: 28px;
+    padding: 44px 40px;
+    width: 100%;
+    max-width: 560px;
+    max-height: 90svh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 40px 100px rgba(61,14,31,0.4);
+    animation: popIn 0.4s cubic-bezier(.16,1,.3,1) forwards;
+  }
+
+  @keyframes popIn {
+    from { opacity: 0; transform: scale(0.9) translateY(20px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 20px; right: 20px;
+    background: none;
+    border: 1px solid rgba(196,104,125,0.2);
+    border-radius: 50%;
+    width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    color: var(--m3);
+    font-size: 18px;
+    transition: all 0.2s;
+  }
+
+  .modal-close:hover { background: rgba(196,104,125,0.08); border-color: var(--m3); }
+
+  .modal h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    font-weight: 300;
+    color: var(--m1);
+    margin-bottom: 6px;
+  }
+
+  .modal-sub {
+    font-size: 12px;
+    font-weight: 200;
+    color: var(--m4);
+    letter-spacing: 1px;
+    margin-bottom: 32px;
+  }
+
+  /* form fields */
+  .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+
+  .field label {
+    font-size: 9px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--m4);
+    font-weight: 300;
+  }
+
+  .field input, .field textarea, .field select {
+    background: rgba(255,255,255,0.75);
+    border: 1px solid rgba(196,104,125,0.22);
+    border-radius: 14px;
+    padding: 13px 18px;
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    font-weight: 200;
+    color: var(--m1);
+    outline: none;
+    transition: all 0.3s;
+    width: 100%;
+  }
+
+  .field input:focus, .field textarea:focus {
+    border-color: var(--m3);
+    box-shadow: 0 0 0 3px rgba(158,61,82,0.08);
+    background: white;
+  }
+
+  .field textarea { resize: vertical; min-height: 80px; }
+
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+  .btn-primary {
+    width: 100%;
+    background: linear-gradient(135deg, var(--m2), var(--m1));
+    color: var(--white);
+    border: none;
+    border-radius: 50px;
+    padding: 16px 32px;
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 400;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 8px;
+  }
+
+  .btn-primary:hover {
+    background: linear-gradient(135deg, var(--m3), var(--m2));
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(61,14,31,0.28);
+  }
+
+  .btn-secondary {
+    width: 100%;
+    background: transparent;
+    color: var(--m3);
+    border: 1px solid rgba(196,104,125,0.3);
+    border-radius: 50px;
+    padding: 14px 32px;
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 300;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 8px;
+  }
+
+  .btn-secondary:hover { background: rgba(196,104,125,0.06); border-color: var(--m3); }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(196,104,125,0.2), transparent);
+    margin: 28px 0;
+  }
+
+  /* ─── GIFT LIST IN ADMIN ─── */
+  .admin-gift-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    background: rgba(255,255,255,0.6);
+    border: 1px solid rgba(196,104,125,0.12);
+    border-radius: 14px;
+    margin-bottom: 10px;
+    gap: 12px;
+  }
+
+  .admin-gift-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--m1);
+    flex: 1;
+  }
+
+  .btn-del {
+    background: none;
+    border: 1px solid rgba(196,104,125,0.2);
+    border-radius: 50px;
+    padding: 6px 14px;
+    font-size: 11px;
+    color: var(--m4);
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+
+  .btn-del:hover { background: rgba(196,104,125,0.08); border-color: var(--m3); color: var(--m2); }
+
+  /* ─── EMPTY ─── */
+  .empty {
+    text-align: center;
+    padding: 60px 20px;
+    grid-column: 1/-1;
+  }
+
+  .empty p {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--m5);
+    font-weight: 300;
+  }
+
+  /* ─── TABS ─── */
+  .tabs { display: flex; gap: 8px; margin-bottom: 28px; flex-wrap: wrap; }
+
+  .tab {
+    padding: 8px 18px;
+    border-radius: 50px;
+    border: 1px solid rgba(196,104,125,0.22);
+    background: none;
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--m3);
+    cursor: pointer;
+    font-weight: 300;
+    transition: all 0.25s;
+  }
+
+  .tab.active, .tab:hover {
+    background: linear-gradient(135deg, var(--m2), var(--m1));
+    color: var(--white);
+    border-color: transparent;
+  }
+
+  /* ─── PASSWORD ─── */
+  .pw-error { color: #c0392b; font-size: 12px; margin-top: 8px; display: none; }
+
+  /* ─── STATUS MESSAGE ─── */
+  .status-bar {
+    position: fixed;
+    bottom: 90px; right: 28px;
+    background: var(--m1);
+    color: var(--gold2);
+    border-radius: 50px;
+    padding: 12px 22px;
+    font-size: 12px;
+    letter-spacing: 1px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.4s ease;
+    z-index: 300;
+    pointer-events: none;
+  }
+
+  .status-bar.show { opacity: 1; transform: translateY(0); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    text-align: center;
+    padding: 48px 24px 64px;
+    border-top: 1px solid rgba(196,104,125,0.1);
+  }
+
+  footer p {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 20px;
+    color: var(--m4);
+    font-weight: 300;
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 600px) {
+    .modal { padding: 32px 24px; }
+    .field-row { grid-template-columns: 1fr; }
+    .pix-card { padding: 36px 24px; }
+    .countdown { gap: 4px; }
+    .cd-num { min-width: 62px; font-size: 36px; padding: 8px 12px; }
+  }
+
+  /* Scrollbar */
+  .modal::-webkit-scrollbar { width: 4px; }
+  .modal::-webkit-scrollbar-track { background: transparent; }
+  .modal::-webkit-scrollbar-thumb { background: rgba(196,104,125,0.3); border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<div class="bg-layer"></div>
+<div class="bg-grain"></div>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+  <div class="hero-badge">Lista de Presentes</div>
+
+  <h1 class="hero-names">
+    Kamilly
+    <span class="amp">&amp;</span>
+    <span class="n2">Tiago</span>
+  </h1>
+
+  <div class="hero-line"></div>
+  <p class="hero-date-text">20 de Novembro de 2027 · 18h30</p>
+
+  <div class="countdown-wrap">
+    <p class="countdown-label">Faltam para o grande dia</p>
+    <div class="countdown">
+      <div class="cd-unit">
+        <div class="cd-num" id="cd-d">000</div>
+        <span class="cd-lbl">dias</span>
+      </div>
+      <span class="cd-sep">:</span>
+      <div class="cd-unit">
+        <div class="cd-num" id="cd-h">00</div>
+        <span class="cd-lbl">horas</span>
+      </div>
+      <span class="cd-sep">:</span>
+      <div class="cd-unit">
+        <div class="cd-num" id="cd-m">00</div>
+        <span class="cd-lbl">min</span>
+      </div>
+      <span class="cd-sep">:</span>
+      <div class="cd-unit">
+        <div class="cd-num" id="cd-s">00</div>
+        <span class="cd-lbl">seg</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Rolar</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- ─── PIX ─── -->
+<div class="section">
+  <div class="sec-head">
+    <p class="sec-eyebrow">Presente em dinheiro</p>
+    <h2 class="sec-title">Chave Pix</h2>
+  </div>
+  <div class="pix-wrap">
+    <div class="pix-card">
+      <div class="pix-heart">🤍</div>
+      <h3>Presente via Pix</h3>
+      <p>Sua contribuição é muito especial para nós</p>
+      <div class="pix-box">
+        <span class="pix-box-label">Chave Pix</span>
+        <div class="pix-box-value" id="pix-key-display">—</div>
+      </div>
+      <button class="pix-copy" onclick="copyPix()">
+        <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copiar chave
+      </button>
+      <p class="pix-copied" id="pix-copied"></p>
+      <p class="pix-favored" id="pix-name-display"></p>
+    </div>
+  </div>
+</div>
+
+<!-- ─── GIFTS ─── -->
+<div class="section" style="padding-top: 0;">
+  <div class="sec-head">
+    <p class="sec-eyebrow">Nossos desejos</p>
+    <h2 class="sec-title">Lista de Presentes</h2>
+  </div>
+  <div class="gifts-grid" id="gifts-grid">
+    <div class="empty" id="empty-state">
+      <p>Os presentes aparecerão aqui em breve…</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>Obrigado por fazer parte do nosso dia especial 🤍</p>
+</footer>
+
+<!-- ─── ADMIN BUTTON ─── -->
+<button class="admin-trigger" onclick="openAdminGate()" title="Área restrita">
+  <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/><path d="M18 8l2 2-2 2"/><path d="M20 10h-4"/></svg>
+</button>
+
+<div class="status-bar" id="status-bar"></div>
+
+<!-- ─── PASSWORD MODAL ─── -->
+<div class="modal-overlay" id="pw-modal">
+  <div class="modal" style="max-width:380px;">
+    <button class="modal-close" onclick="closeModal('pw-modal')">×</button>
+    <h3>Área Restrita</h3>
+    <p class="modal-sub">Apenas os noivos podem editar</p>
+    <div class="field">
+      <label>Senha</label>
+      <input type="password" id="pw-input" placeholder="Digite a senha" onkeydown="if(event.key==='Enter')checkPw()">
+      <p class="pw-error" id="pw-error">Senha incorreta. Tente novamente.</p>
+    </div>
+    <button class="btn-primary" onclick="checkPw()">Entrar</button>
+  </div>
+</div>
+
+<!-- ─── ADMIN MODAL ─── -->
+<div class="modal-overlay" id="admin-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('admin-modal')">×</button>
+    <h3>Painel dos Noivos</h3>
+    <p class="modal-sub">Gerencie presentes e dados Pix</p>
+
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('tab-add', this)">+ Adicionar presente</button>
+      <button class="tab" onclick="switchTab('tab-list', this)">Lista</button>
+      <button class="tab" onclick="switchTab('tab-pix', this)">Pix</button>
+      <button class="tab" onclick="switchTab('tab-pw', this)">Senha</button>
+    </div>
+
+    <!-- ADD -->
+    <div id="tab-add">
+      <div class="field">
+        <label>Foto do presente</label>
+        <div class="img-upload-area" id="img-upload-area" onclick="document.getElementById('f-img-input').click()">
+          <div id="img-placeholder">
+            <div class="img-upload-icon">
+              <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            </div>
+            <p class="img-upload-text">Clique para adicionar foto</p>
+            <p class="img-upload-hint">JPG, PNG — até 2MB</p>
+          </div>
+          <img id="img-preview" style="display:none;" alt="Preview">
+          <div class="img-upload-overlay"><span>Trocar foto</span></div>
+        </div>
+        <input type="file" id="f-img-input" accept="image/*" onchange="handleImgUpload(event)">
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Nome do presente *</label>
+          <input type="text" id="f-name" placeholder="Ex: Jogo de Panelas">
+        </div>
+        <div class="field">
+          <label>Categoria</label>
+          <input type="text" id="f-cat" placeholder="Ex: Cozinha">
+        </div>
+      </div>
+      <div class="field">
+        <label>Descrição</label>
+        <textarea id="f-desc" placeholder="Breve descrição…"></textarea>
+      </div>
+      <div class="field">
+        <label>Link da loja</label>
+        <input type="url" id="f-link" placeholder="https://…">
+      </div>
+      <button class="btn-primary" onclick="addGift()">Adicionar à lista</button>
+    </div>
+
+    <!-- LIST -->
+    <div id="tab-list" style="display:none;">
+      <div id="admin-gift-list"></div>
+    </div>
+
+    <!-- PIX -->
+    <div id="tab-pix" style="display:none;">
+      <div class="field">
+        <label>Chave Pix</label>
+        <input type="text" id="p-key" placeholder="CPF, e-mail, telefone ou chave aleatória">
+      </div>
+      <div class="field">
+        <label>Nome do favorecido</label>
+        <input type="text" id="p-name" placeholder="Ex: Kamilly e Tiago">
+      </div>
+      <button class="btn-primary" onclick="savePix()">Salvar Pix</button>
+    </div>
+
+    <!-- CHANGE PASSWORD -->
+    <div id="tab-pw" style="display:none;">
+      <div class="field">
+        <label>Nova senha</label>
+        <input type="password" id="pw-new" placeholder="Mínimo 4 caracteres">
+      </div>
+      <div class="field">
+        <label>Confirmar senha</label>
+        <input type="password" id="pw-confirm" placeholder="Repita a senha">
+      </div>
+      <button class="btn-primary" onclick="changePw()">Alterar senha</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ──────────────────────────────────────────
+//  STORAGE KEYS
+// ──────────────────────────────────────────
+const KEYS = {
+  gifts: 'kt_gifts',
+  pix:   'kt_pix',
+  pw:    'kt_pw'
+};
+
+// ──────────────────────────────────────────
+//  STATE
+// ──────────────────────────────────────────
+let gifts = [];
+let pixData = { key: '', name: '' };
+const DEFAULT_PW = 'kamilly2027';
+
+function getStoredPw() {
+  return localStorage.getItem(KEYS.pw) || DEFAULT_PW;
+}
+
+// ──────────────────────────────────────────
+//  CLOUD STORAGE (Anthropic Artifacts API)
+// ──────────────────────────────────────────
+async function cloudGet(key) {
+  try {
+    const result = await window.storage.get(key, true);
+    return result ? JSON.parse(result.value) : null;
+  } catch { return null; }
+}
+
+async function cloudSet(key, value) {
+  try {
+    await window.storage.set(key, JSON.stringify(value), true);
+  } catch (e) { console.warn('Storage error', e); }
+}
+
+// ──────────────────────────────────────────
+//  INIT
+// ──────────────────────────────────────────
+async function init() {
+  // Load from shared cloud storage
+  const cloudGifts = await cloudGet(KEYS.gifts);
+  const cloudPix   = await cloudGet(KEYS.pix);
+
+  gifts   = cloudGifts || [];
+  pixData = cloudPix   || { key: 'Configure sua chave Pix no painel', name: 'Kamilly & Tiago' };
+
+  renderGifts();
+  renderPix();
+  startCountdown();
+}
+
+// ──────────────────────────────────────────
+//  RENDER GIFTS
+// ──────────────────────────────────────────
+function renderGifts() {
+  const grid  = document.getElementById('gifts-grid');
+  const empty = document.getElementById('empty-state');
+
+  // Remove old cards (keep empty state el)
+  [...grid.children].forEach(c => { if (c !== empty) c.remove(); });
+
+  if (gifts.length === 0) {
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  gifts.forEach((g, i) => {
+    const card = document.createElement('div');
+    card.className = 'gift-card';
+    card.style.animationDelay = (i * 0.07) + 's';
+
+    const imgHtml = g.img
+      ? `<div class="gift-img-wrap"><img src="${g.img}" alt="${esc(g.name)}" loading="lazy"></div>`
+      : `<div class="gift-img-wrap"><div class="gift-img-placeholder">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <span>Sem foto</span>
+        </div></div>`;
+
+    card.innerHTML = `
+      ${imgHtml}
+      <div class="gift-inner">
+        ${g.cat ? `<p class="gift-cat">${esc(g.cat)}</p>` : ''}
+        <h3 class="gift-name">${esc(g.name)}</h3>
+        ${g.desc ? `<p class="gift-desc">${esc(g.desc)}</p>` : ''}
+        <div class="gift-foot">
+          <div class="gift-actions">
+            ${g.link ? `<a href="${esc(g.link)}" target="_blank" rel="noopener" class="btn-link">
+              Ver presente
+              <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>` : ''}
+          </div>
+        </div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+// ──────────────────────────────────────────
+//  RENDER PIX
+// ──────────────────────────────────────────
+function renderPix() {
+  document.getElementById('pix-key-display').textContent = pixData.key || '—';
+  document.getElementById('pix-name-display').textContent = pixData.name ? 'Em nome de: ' + pixData.name : '';
+}
+
+// ──────────────────────────────────────────
+//  COPY PIX
+// ──────────────────────────────────────────
+function copyPix() {
+  if (!pixData.key || pixData.key === '—') return;
+  navigator.clipboard.writeText(pixData.key).then(() => {
+    const el = document.getElementById('pix-copied');
+    el.textContent = '✓ Chave copiada!';
+    setTimeout(() => el.textContent = '', 2800);
+  });
+}
+
+// ──────────────────────────────────────────
+//  COUNTDOWN
+// ──────────────────────────────────────────
+function startCountdown() {
+  const target = new Date('2027-11-20T18:30:00');
+
+  function tick() {
+    const now  = new Date();
+    const diff = target - now;
+
+    if (diff <= 0) {
+      document.getElementById('cd-d').textContent = '000';
+      document.getElementById('cd-h').textContent = '00';
+      document.getElementById('cd-m').textContent = '00';
+      document.getElementById('cd-s').textContent = '00';
+      return;
+    }
+
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000)  / 60000);
+    const s = Math.floor((diff % 60000)    / 1000);
+
+    document.getElementById('cd-d').textContent = String(d).padStart(3, '0');
+    document.getElementById('cd-h').textContent = String(h).padStart(2, '0');
+    document.getElementById('cd-m').textContent = String(m).padStart(2, '0');
+    document.getElementById('cd-s').textContent = String(s).padStart(2, '0');
+  }
+
+  tick();
+  setInterval(tick, 1000);
+}
+
+// ──────────────────────────────────────────
+//  ADD GIFT
+// ──────────────────────────────────────────
+let pendingImg = null;
+
+function handleImgUpload(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  if (file.size > 2 * 1024 * 1024) { showStatus('Imagem muito grande (máx 2MB)'); return; }
+
+  const reader = new FileReader();
+  reader.onload = ev => {
+    pendingImg = ev.target.result;
+    const area = document.getElementById('img-upload-area');
+    const preview = document.getElementById('img-preview');
+    const placeholder = document.getElementById('img-placeholder');
+    preview.src = pendingImg;
+    preview.style.display = 'block';
+    placeholder.style.display = 'none';
+    area.classList.add('has-img');
+  };
+  reader.readAsDataURL(file);
+}
+
+async function addGift() {
+  const name = document.getElementById('f-name').value.trim();
+  if (!name) { document.getElementById('f-name').focus(); return; }
+
+  gifts.push({
+    name,
+    cat:  document.getElementById('f-cat').value.trim(),
+    desc: document.getElementById('f-desc').value.trim(),
+    link: document.getElementById('f-link').value.trim(),
+    img:  pendingImg || null,
+  });
+
+  await cloudSet(KEYS.gifts, gifts);
+
+  // Reset form
+  ['f-name','f-cat','f-desc','f-link'].forEach(id => document.getElementById(id).value = '');
+  pendingImg = null;
+  document.getElementById('img-preview').style.display = 'none';
+  document.getElementById('img-placeholder').style.display = 'block';
+  document.getElementById('img-upload-area').classList.remove('has-img');
+  document.getElementById('f-img-input').value = '';
+
+  renderGifts();
+  renderAdminList();
+  showStatus('✓ Presente adicionado!');
+}
+
+// ──────────────────────────────────────────
+//  REMOVE GIFT
+// ──────────────────────────────────────────
+async function removeGift(i) {
+  gifts.splice(i, 1);
+  await cloudSet(KEYS.gifts, gifts);
+  renderGifts();
+  renderAdminList();
+  showStatus('Presente removido');
+}
+
+// ──────────────────────────────────────────
+//  SAVE PIX
+// ──────────────────────────────────────────
+async function savePix() {
+  pixData.key  = document.getElementById('p-key').value.trim()  || pixData.key;
+  pixData.name = document.getElementById('p-name').value.trim() || pixData.name;
+  await cloudSet(KEYS.pix, pixData);
+  renderPix();
+  showStatus('✓ Pix salvo!');
+}
+
+// ──────────────────────────────────────────
+//  ADMIN LIST
+// ──────────────────────────────────────────
+function renderAdminList() {
+  const el = document.getElementById('admin-gift-list');
+  if (gifts.length === 0) {
+    el.innerHTML = '<p style="font-family:Cormorant Garamond,serif;font-style:italic;font-size:18px;color:var(--m5);text-align:center;padding:24px 0;">Nenhum presente ainda</p>';
+    return;
+  }
+  el.innerHTML = gifts.map((g, i) => `
+    <div class="admin-gift-item">
+      <span class="admin-gift-name">${esc(g.name)}</span>
+      <button class="btn-del" onclick="removeGift(${i})">Remover</button>
+    </div>`).join('');
+}
+
+// ──────────────────────────────────────────
+//  CHANGE PASSWORD
+// ──────────────────────────────────────────
+function changePw() {
+  const n  = document.getElementById('pw-new').value;
+  const c  = document.getElementById('pw-confirm').value;
+  if (n.length < 4) { showStatus('Senha muito curta'); return; }
+  if (n !== c) { showStatus('As senhas não coincidem'); return; }
+  localStorage.setItem(KEYS.pw, n);
+  document.getElementById('pw-new').value = '';
+  document.getElementById('pw-confirm').value = '';
+  showStatus('✓ Senha alterada!');
+}
+
+// ──────────────────────────────────────────
+//  AUTH
+// ──────────────────────────────────────────
+function openAdminGate() {
+  openModal('pw-modal');
+  setTimeout(() => document.getElementById('pw-input').focus(), 200);
+}
+
+function checkPw() {
+  const val = document.getElementById('pw-input').value;
+  const err = document.getElementById('pw-error');
+  if (val === getStoredPw()) {
+    err.style.display = 'none';
+    document.getElementById('pw-input').value = '';
+    closeModal('pw-modal');
+    openModal('admin-modal');
+    renderAdminList();
+    // pre-fill pix
+    document.getElementById('p-key').value  = pixData.key;
+    document.getElementById('p-name').value = pixData.name;
+  } else {
+    err.style.display = 'block';
+    document.getElementById('pw-input').select();
+  }
+}
+
+// ──────────────────────────────────────────
+//  TABS
+// ──────────────────────────────────────────
+function switchTab(id, btn) {
+  ['tab-add','tab-list','tab-pix','tab-pw'].forEach(t => {
+    document.getElementById(t).style.display = t === id ? 'block' : 'none';
+  });
+  document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ──────────────────────────────────────────
+//  MODAL HELPERS
+// ──────────────────────────────────────────
+function openModal(id)  { document.getElementById(id).classList.add('open'); }
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+  if (id === 'pw-modal') document.getElementById('pw-error').style.display = 'none';
+}
+
+// Close on overlay click
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay) closeModal(overlay.id);
+  });
+});
+
+// ──────────────────────────────────────────
+//  STATUS BAR
+// ──────────────────────────────────────────
+let statusTimer;
+function showStatus(msg) {
+  const el = document.getElementById('status-bar');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(statusTimer);
+  statusTimer = setTimeout(() => el.classList.remove('show'), 2800);
+}
+
+// ──────────────────────────────────────────
+//  UTILS
+// ──────────────────────────────────────────
+function esc(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ──────────────────────────────────────────
+//  START
+// ──────────────────────────────────────────
+init();
+</script>
+</body>
+</html>
