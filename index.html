@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kamilly & Tiago — Lista de Presentes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ░░ HERO ░░ -->
+  <section class="hero">
+    <div class="hero-badge">Lista de Presentes</div>
+    <h1 class="hero-names">
+      Kamilly
+      <span class="amp">&amp;</span>
+      <span class="n2">Tiago</span>
+    </h1>
+    <div class="vline"></div>
+    <p class="hero-date">20 de Novembro de 2027 · 18h30</p>
+
+    <div class="cd-wrap">
+      <p class="cd-label">Faltam para o grande dia</p>
+      <div class="cd-row">
+        <div class="cd-unit"><div class="cd-num" id="cd-d">000</div><span class="cd-lbl">dias</span></div>
+        <span class="cd-sep">:</span>
+        <div class="cd-unit"><div class="cd-num" id="cd-h">00</div><span class="cd-lbl">horas</span></div>
+        <span class="cd-sep">:</span>
+        <div class="cd-unit"><div class="cd-num" id="cd-m">00</div><span class="cd-lbl">min</span></div>
+        <span class="cd-sep">:</span>
+        <div class="cd-unit"><div class="cd-num" id="cd-s">00</div><span class="cd-lbl">seg</span></div>
+      </div>
+    </div>
+
+    <div class="scroll-hint">
+      <span>Rolar</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ░░ PIX ░░ -->
+  <div class="section">
+    <div class="sec-head">
+      <p class="sec-eye">Presente em dinheiro</p>
+      <h2 class="sec-title">Chave Pix</h2>
+    </div>
+    <div class="pix-wrap">
+      <div class="pix-card">
+        <div class="pix-icon">🤍</div>
+        <h3>Presente via Pix</h3>
+        <p>Sua contribuição é muito especial para nós</p>
+        <div class="pix-box" id="pix-box">
+          <span class="pix-box-lbl">Chave Pix</span>
+          <div class="pix-box-val" id="pix-key-display">—</div>
+        </div>
+        <button class="pix-copy-btn" onclick="copyPix()">
+          <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copiar chave
+        </button>
+        <p class="pix-toast" id="pix-toast"></p>
+        <p class="pix-name" id="pix-name-display"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ░░ PRESENTES ░░ -->
+  <div class="section" style="padding-top:0">
+    <div class="sec-head">
+      <p class="sec-eye">Nossos desejos</p>
+      <h2 class="sec-title">Lista de Presentes</h2>
+    </div>
+    <div class="gifts-grid" id="gifts-grid">
+      <div class="empty-state" id="empty-state">
+        <p>Os presentes aparecerão aqui em breve…</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Obrigado por fazer parte do nosso dia especial 🤍</p>
+  </footer>
+
+  <!-- ░░ BOTÃO ADMIN ░░ -->
+  <button class="admin-btn" onclick="openPwModal()" title="Área restrita">
+    <svg viewBox="0 0 24 24"><path d="M12 2a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4z"/></svg>
+  </button>
+
+  <div class="status-bar" id="status-bar"></div>
+
+  <!-- ░░ MODAL SENHA ░░ -->
+  <div class="overlay" id="pw-overlay">
+    <div class="modal" style="max-width:380px">
+      <button class="modal-close" onclick="closeOverlay('pw-overlay')">×</button>
+      <h3>Área Restrita</h3>
+      <p class="modal-sub">Apenas os noivos podem editar</p>
+      <div class="field">
+        <label>Senha</label>
+        <input type="password" id="pw-input" placeholder="Digite a senha" onkeydown="if(event.key==='Enter')checkPw()" />
+        <p class="pw-err" id="pw-err">Senha incorreta. Tente novamente.</p>
+      </div>
+      <button class="btn-primary" onclick="checkPw()">Entrar</button>
+    </div>
+  </div>
+
+  <!-- ░░ MODAL ADMIN ░░ -->
+  <div class="overlay" id="admin-overlay">
+    <div class="modal">
+      <button class="modal-close" onclick="closeOverlay('admin-overlay')">×</button>
+      <h3>Painel dos Noivos</h3>
+      <p class="modal-sub">Gerencie presentes e dados Pix</p>
+
+      <div class="tabs">
+        <button class="tab active" onclick="switchTab('tab-add',this)">+ Presente</button>
+        <button class="tab" onclick="switchTab('tab-list',this)">Lista</button>
+        <button class="tab" onclick="switchTab('tab-pix',this)">Pix</button>
+        <button class="tab" onclick="switchTab('tab-pw',this)">Senha</button>
+      </div>
+
+      <!-- TAB: ADICIONAR -->
+      <div id="tab-add">
+        <div class="field">
+          <label>Foto do presente</label>
+          <div class="img-upload" id="img-upload" onclick="document.getElementById('f-img').click()">
+            <div id="img-placeholder">
+              <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              <span>Clique para adicionar foto</span>
+              <small>JPG, PNG — até 2MB</small>
+            </div>
+            <img id="img-preview" alt="preview" style="display:none" />
+            <div class="img-overlay"><span>Trocar foto</span></div>
+          </div>
+          <input type="file" id="f-img" accept="image/*" style="display:none" onchange="handleImg(event)" />
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Nome do presente *</label>
+            <input type="text" id="f-name" placeholder="Ex: Jogo de Panelas" />
+          </div>
+          <div class="field">
+            <label>Categoria</label>
+            <input type="text" id="f-cat" placeholder="Ex: Cozinha" />
+          </div>
+        </div>
+        <div class="field">
+          <label>Descrição</label>
+          <textarea id="f-desc" placeholder="Breve descrição…"></textarea>
+        </div>
+        <div class="field">
+          <label>Link da loja</label>
+          <input type="url" id="f-link" placeholder="https://…" />
+        </div>
+        <button class="btn-primary" id="btn-add" onclick="addGift()">Adicionar à lista</button>
+      </div>
+
+      <!-- TAB: LISTA -->
+      <div id="tab-list" style="display:none">
+        <div id="admin-list"></div>
+      </div>
+
+      <!-- TAB: PIX -->
+      <div id="tab-pix" style="display:none">
+        <div class="field">
+          <label>Chave Pix</label>
+          <input type="text" id="p-key" placeholder="CPF, e-mail, telefone ou chave aleatória" />
+        </div>
+        <div class="field">
+          <label>Nome do favorecido</label>
+          <input type="text" id="p-name" placeholder="Ex: Kamilly e Tiago" />
+        </div>
+        <button class="btn-primary" onclick="savePix()">Salvar Pix</button>
+      </div>
+
+      <!-- TAB: SENHA -->
+      <div id="tab-pw" style="display:none">
+        <div class="field">
+          <label>Nova senha</label>
+          <input type="password" id="pw-new" placeholder="Mínimo 4 caracteres" />
+        </div>
+        <div class="field">
+          <label>Confirmar senha</label>
+          <input type="password" id="pw-confirm" placeholder="Repita a senha" />
+        </div>
+        <button class="btn-primary" onclick="changePw()">Alterar senha</button>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
