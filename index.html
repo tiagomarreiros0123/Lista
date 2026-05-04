@@ -2,193 +2,1025 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kamilly & Tiago — Lista de Presentes</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>💍 Orçamento do Casamento</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --marsala: #7B3F45;
+      --marsala-light: #A05560;
+      --marsala-pale: #f5eced;
+      --marsala-mid: #d4a0a5;
+      --gold: #C9A84C;
+      --gold-light: #e8c97a;
+      --cream: #FAF7F2;
+      --text: #2c1f22;
+      --text-muted: #7a6568;
+      --surface: #ffffff;
+      --border: #ecdde0;
+      --shadow: 0 4px 24px rgba(123,63,69,0.10);
+      --shadow-lg: 0 12px 48px rgba(123,63,69,0.16);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    .hero {
+      background: linear-gradient(135deg, var(--marsala) 0%, #5c2d32 100%);
+      padding: 48px 24px 56px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-ring {
+      font-size: 36px;
+      margin-bottom: 12px;
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 300;
+      color: #fff;
+      letter-spacing: 0.04em;
+      margin-bottom: 6px;
+    }
+    .hero h1 em { font-style: italic; color: var(--gold-light); }
+    .hero p {
+      color: rgba(255,255,255,0.65);
+      font-size: 0.9rem;
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* ── CONFIG BANNER ── */
+    .config-banner {
+      background: var(--gold);
+      padding: 10px 24px;
+      text-align: center;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: #3a2600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .config-banner:hover { background: var(--gold-light); }
+    .config-banner.ok { background: #e8f5e9; color: #2e7d32; cursor: default; }
+
+    /* ── MAIN ── */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 16px 80px;
+    }
+
+    /* ── SUMMARY CARDS ── */
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 16px;
+      margin: -28px 0 32px;
+      position: relative;
+      z-index: 10;
+    }
+    .card {
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 20px 22px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+    .card-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+    .card-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--marsala);
+    }
+    .card-value.gold { color: var(--gold); }
+    .card-value.green { color: #2e7d32; }
+    .card-value.red { color: #c62828; }
+    .card-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* ── PROGRESS BAR ── */
+    .progress-wrap {
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 20px 24px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      margin-bottom: 28px;
+    }
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .progress-title {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .progress-pct {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--marsala);
+    }
+    .progress-bar-bg {
+      background: var(--marsala-pale);
+      border-radius: 100px;
+      height: 10px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--marsala), var(--gold));
+      border-radius: 100px;
+      transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    /* ── SECTION ── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: var(--marsala);
+    }
+    .section-title span { font-style: italic; }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 18px;
+      border-radius: 100px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .btn-primary {
+      background: var(--marsala);
+      color: #fff;
+    }
+    .btn-primary:hover { background: var(--marsala-light); transform: translateY(-1px); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--marsala);
+      border: 1.5px solid var(--border);
+    }
+    .btn-ghost:hover { border-color: var(--marsala); background: var(--marsala-pale); }
+    .btn-gold {
+      background: var(--gold);
+      color: #3a2600;
+    }
+    .btn-gold:hover { background: var(--gold-light); }
+    .btn-sm { padding: 6px 12px; font-size: 0.75rem; }
+    .btn-icon { padding: 6px; border-radius: 8px; background: transparent; border: none; cursor: pointer; color: var(--text-muted); transition: all 0.15s; }
+    .btn-icon:hover { color: var(--marsala); background: var(--marsala-pale); }
+    .btn-icon.danger:hover { color: #c62828; background: #ffebee; }
+
+    /* ── CATEGORY CARD ── */
+    .category-block {
+      background: var(--surface);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      margin-bottom: 16px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      animation: fadeSlide 0.3s ease;
+    }
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .category-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 20px;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.15s;
+    }
+    .category-head:hover { background: var(--marsala-pale); }
+    .cat-emoji { font-size: 1.3rem; flex-shrink: 0; }
+    .cat-info { flex: 1; min-width: 0; }
+    .cat-name {
+      font-weight: 500;
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+    .cat-totals {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .cat-badge {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--marsala);
+      flex-shrink: 0;
+    }
+    .cat-chevron { color: var(--text-muted); font-size: 0.8rem; transition: transform 0.25s; flex-shrink: 0; }
+    .cat-chevron.open { transform: rotate(180deg); }
+
+    /* ── MINI PROGRESS ── */
+    .cat-mini-bar {
+      height: 3px;
+      background: var(--marsala-pale);
+    }
+    .cat-mini-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--marsala), var(--gold));
+      transition: width 0.5s;
+    }
+
+    /* ── ITEMS TABLE ── */
+    .items-wrap { display: none; padding: 0 20px 16px; }
+    .items-wrap.open { display: block; }
+
+    .items-table { width: 100%; border-collapse: collapse; }
+    .items-table th {
+      text-align: left;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      padding: 8px 6px 6px;
+      border-bottom: 1px solid var(--border);
+      font-weight: 500;
+    }
+    .items-table td {
+      padding: 10px 6px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    .items-table tr:last-child td { border-bottom: none; }
+    .items-table tr.item-row:hover td { background: var(--marsala-pale); }
+
+    .td-name { font-size: 0.88rem; color: var(--text); }
+    .td-name input, .td-val input, .td-status select {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 5px 8px;
+      background: var(--cream);
+      color: var(--text);
+      width: 100%;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .td-name input:focus, .td-val input:focus, .td-status select:focus {
+      border-color: var(--marsala);
+    }
+    .td-val { font-size: 0.88rem; min-width: 110px; }
+    .td-status { min-width: 120px; }
+    .td-actions { white-space: nowrap; text-align: right; }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 9px;
+      border-radius: 100px;
+      font-size: 0.72rem;
+      font-weight: 500;
+    }
+    .status-pago { background: #e8f5e9; color: #2e7d32; }
+    .status-pendente { background: #fff8e1; color: #f57f17; }
+    .status-orcamento { background: #e3f2fd; color: #1565c0; }
+
+    .add-item-row td { background: none; }
+    .add-item-btn {
+      width: 100%;
+      padding: 8px;
+      border: 1.5px dashed var(--marsala-mid);
+      border-radius: 8px;
+      background: transparent;
+      color: var(--marsala);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 8px;
+    }
+    .add-item-btn:hover { background: var(--marsala-pale); border-color: var(--marsala); }
+
+    /* ── ORÇAMENTO GLOBAL ── */
+    .budget-setup {
+      background: var(--surface);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      padding: 20px 24px;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .budget-setup label {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+    .budget-input {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--marsala);
+      border: none;
+      border-bottom: 2px solid var(--border);
+      background: transparent;
+      outline: none;
+      padding: 2px 4px;
+      max-width: 200px;
+      transition: border-color 0.2s;
+    }
+    .budget-input:focus { border-color: var(--marsala); }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(44,31,34,0.55);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      backdrop-filter: blur(4px);
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 32px;
+      max-width: 440px;
+      width: 100%;
+      box-shadow: var(--shadow-lg);
+      animation: modalIn 0.25s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.92); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .modal h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: var(--marsala);
+      margin-bottom: 8px;
+    }
+    .modal p { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px; line-height: 1.5; }
+    .form-group { margin-bottom: 14px; }
+    .form-group label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 5px;
+    }
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+      background: var(--cream);
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .form-group input:focus, .form-group select:focus { border-color: var(--marsala); }
+    .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--text);
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      box-shadow: var(--shadow-lg);
+      z-index: 2000;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: all 0.3s;
+      pointer-events: none;
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    .toast.success { background: #2e7d32; }
+    .toast.error { background: #c62828; }
+
+    /* ── SYNC BAR ── */
+    .sync-bar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--gold);
+      z-index: 9999;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+    .sync-bar.active { transform: scaleX(1); }
+
+    /* ── FOOTER ── */
+    .footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .summary { grid-template-columns: 1fr 1fr; }
+      .items-table th:nth-child(3), .items-table td:nth-child(3) { display: none; }
+      .budget-setup { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- ░░ HERO ░░ -->
-  <section class="hero">
-    <div class="hero-badge">Lista de Presentes</div>
-    <h1 class="hero-names">
-      Kamilly
-      <span class="amp">&amp;</span>
-      <span class="n2">Tiago</span>
-    </h1>
-    <div class="vline"></div>
-    <p class="hero-date">20 de Novembro de 2027 · 18h30</p>
+<div class="sync-bar" id="syncBar"></div>
 
-    <div class="cd-wrap">
-      <p class="cd-label">Faltam para o grande dia</p>
-      <div class="cd-row">
-        <div class="cd-unit"><div class="cd-num" id="cd-d">000</div><span class="cd-lbl">dias</span></div>
-        <span class="cd-sep">:</span>
-        <div class="cd-unit"><div class="cd-num" id="cd-h">00</div><span class="cd-lbl">horas</span></div>
-        <span class="cd-sep">:</span>
-        <div class="cd-unit"><div class="cd-num" id="cd-m">00</div><span class="cd-lbl">min</span></div>
-        <span class="cd-sep">:</span>
-        <div class="cd-unit"><div class="cd-num" id="cd-s">00</div><span class="cd-lbl">seg</span></div>
-      </div>
-    </div>
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-ring">💍</div>
+  <h1>Nosso <em>Casamento</em></h1>
+  <p>Controle de Orçamento</p>
+</div>
 
-    <div class="scroll-hint">
-      <span>Rolar</span>
-      <div class="scroll-line"></div>
-    </div>
-  </section>
+<!-- CONFIG BANNER -->
+<div class="config-banner" id="configBanner" onclick="openConfig()">
+  ⚙️ Clique aqui para configurar o JSONBin (necessário para salvar na nuvem)
+</div>
 
-  <!-- ░░ PIX ░░ -->
-  <div class="section">
-    <div class="sec-head">
-      <p class="sec-eye">Presente em dinheiro</p>
-      <h2 class="sec-title">Chave Pix</h2>
+<!-- MAIN -->
+<div class="container">
+
+  <!-- ORÇAMENTO TOTAL -->
+  <div style="height:28px"></div>
+  <div class="budget-setup">
+    <label>💰 Orçamento Total:</label>
+    <input type="text" class="budget-input" id="budgetInput" placeholder="R$ 0,00" oninput="onBudgetChange(this)" />
+    <div style="flex:1"></div>
+    <button class="btn btn-gold btn-sm" onclick="saveToCloud()">☁️ Salvar na Nuvem</button>
+    <button class="btn btn-ghost btn-sm" onclick="loadFromCloud()">🔄 Sincronizar</button>
+  </div>
+
+  <!-- CARDS -->
+  <div class="summary">
+    <div class="card">
+      <div class="card-label">Orçamento Total</div>
+      <div class="card-value gold" id="cardTotal">R$ 0</div>
     </div>
-    <div class="pix-wrap">
-      <div class="pix-card">
-        <div class="pix-icon">🤍</div>
-        <h3>Presente via Pix</h3>
-        <p>Sua contribuição é muito especial para nós</p>
-        <div class="pix-box" id="pix-box">
-          <span class="pix-box-lbl">Chave Pix</span>
-          <div class="pix-box-val" id="pix-key-display">—</div>
-        </div>
-        <button class="pix-copy-btn" onclick="copyPix()">
-          <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-          Copiar chave
-        </button>
-        <p class="pix-toast" id="pix-toast"></p>
-        <p class="pix-name" id="pix-name-display"></p>
-      </div>
+    <div class="card">
+      <div class="card-label">Total Gasto</div>
+      <div class="card-value" id="cardGasto">R$ 0</div>
+    </div>
+    <div class="card">
+      <div class="card-label">Pago</div>
+      <div class="card-value green" id="cardPago">R$ 0</div>
+      <div class="card-sub" id="cardPagoSub"></div>
+    </div>
+    <div class="card">
+      <div class="card-label">Saldo Restante</div>
+      <div class="card-value" id="cardSaldo">R$ 0</div>
     </div>
   </div>
 
-  <!-- ░░ PRESENTES ░░ -->
-  <div class="section" style="padding-top:0">
-    <div class="sec-head">
-      <p class="sec-eye">Nossos desejos</p>
-      <h2 class="sec-title">Lista de Presentes</h2>
+  <!-- PROGRESS -->
+  <div class="progress-wrap">
+    <div class="progress-header">
+      <div class="progress-title">Progresso do Orçamento</div>
+      <div class="progress-pct" id="progressPct">0%</div>
     </div>
-    <div class="gifts-grid" id="gifts-grid">
-      <div class="empty-state" id="empty-state">
-        <p>Os presentes aparecerão aqui em breve…</p>
-      </div>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
     </div>
   </div>
 
-  <footer>
-    <p>Obrigado por fazer parte do nosso dia especial 🤍</p>
-  </footer>
-
-  <!-- ░░ BOTÃO ADMIN ░░ -->
-  <button class="admin-btn" onclick="openPwModal()" title="Área restrita">
-    <svg viewBox="0 0 24 24"><path d="M12 2a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4z"/></svg>
-  </button>
-
-  <div class="status-bar" id="status-bar"></div>
-
-  <!-- ░░ MODAL SENHA ░░ -->
-  <div class="overlay" id="pw-overlay">
-    <div class="modal" style="max-width:380px">
-      <button class="modal-close" onclick="closeOverlay('pw-overlay')">×</button>
-      <h3>Área Restrita</h3>
-      <p class="modal-sub">Apenas os noivos podem editar</p>
-      <div class="field">
-        <label>Senha</label>
-        <input type="password" id="pw-input" placeholder="Digite a senha" onkeydown="if(event.key==='Enter')checkPw()" />
-        <p class="pw-err" id="pw-err">Senha incorreta. Tente novamente.</p>
-      </div>
-      <button class="btn-primary" onclick="checkPw()">Entrar</button>
-    </div>
+  <!-- CATEGORIAS -->
+  <div class="section-header">
+    <div class="section-title">Categorias <span>&amp; Despesas</span></div>
+    <button class="btn btn-primary" onclick="openAddCategory()">+ Categoria</button>
   </div>
 
-  <!-- ░░ MODAL ADMIN ░░ -->
-  <div class="overlay" id="admin-overlay">
-    <div class="modal">
-      <button class="modal-close" onclick="closeOverlay('admin-overlay')">×</button>
-      <h3>Painel dos Noivos</h3>
-      <p class="modal-sub">Gerencie presentes e dados Pix</p>
+  <div id="categoriesContainer"></div>
 
-      <div class="tabs">
-        <button class="tab active" onclick="switchTab('tab-add',this)">+ Presente</button>
-        <button class="tab" onclick="switchTab('tab-list',this)">Lista</button>
-        <button class="tab" onclick="switchTab('tab-pix',this)">Pix</button>
-        <button class="tab" onclick="switchTab('tab-pw',this)">Senha</button>
-      </div>
+  <div class="footer">Feito com 💍 amor · Dados salvos no JSONBin.io</div>
+</div>
 
-      <!-- TAB: ADICIONAR -->
-      <div id="tab-add">
-        <div class="field">
-          <label>Foto do presente</label>
-          <div class="img-upload" id="img-upload" onclick="document.getElementById('f-img').click()">
-            <div id="img-placeholder">
-              <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-              <span>Clique para adicionar foto</span>
-              <small>JPG, PNG — até 2MB</small>
-            </div>
-            <img id="img-preview" alt="preview" style="display:none" />
-            <div class="img-overlay"><span>Trocar foto</span></div>
-          </div>
-          <input type="file" id="f-img" accept="image/*" style="display:none" onchange="handleImg(event)" />
-        </div>
-        <div class="field-row">
-          <div class="field">
-            <label>Nome do presente *</label>
-            <input type="text" id="f-name" placeholder="Ex: Jogo de Panelas" />
-          </div>
-          <div class="field">
-            <label>Categoria</label>
-            <input type="text" id="f-cat" placeholder="Ex: Cozinha" />
-          </div>
-        </div>
-        <div class="field">
-          <label>Descrição</label>
-          <textarea id="f-desc" placeholder="Breve descrição…"></textarea>
-        </div>
-        <div class="field">
-          <label>Link da loja</label>
-          <input type="url" id="f-link" placeholder="https://…" />
-        </div>
-        <button class="btn-primary" id="btn-add" onclick="addGift()">Adicionar à lista</button>
-      </div>
-
-      <!-- TAB: LISTA -->
-      <div id="tab-list" style="display:none">
-        <div id="admin-list"></div>
-      </div>
-
-      <!-- TAB: PIX -->
-      <div id="tab-pix" style="display:none">
-        <div class="field">
-          <label>Chave Pix</label>
-          <input type="text" id="p-key" placeholder="CPF, e-mail, telefone ou chave aleatória" />
-        </div>
-        <div class="field">
-          <label>Nome do favorecido</label>
-          <input type="text" id="p-name" placeholder="Ex: Kamilly e Tiago" />
-        </div>
-        <button class="btn-primary" onclick="savePix()">Salvar Pix</button>
-      </div>
-
-      <!-- TAB: SENHA -->
-      <div id="tab-pw" style="display:none">
-        <div class="field">
-          <label>Nova senha</label>
-          <input type="password" id="pw-new" placeholder="Mínimo 4 caracteres" />
-        </div>
-        <div class="field">
-          <label>Confirmar senha</label>
-          <input type="password" id="pw-confirm" placeholder="Repita a senha" />
-        </div>
-        <button class="btn-primary" onclick="changePw()">Alterar senha</button>
-      </div>
-
+<!-- MODAL CONFIG -->
+<div class="modal-overlay" id="modalConfig">
+  <div class="modal">
+    <h2>⚙️ Configurar JSONBin</h2>
+    <p>Crie uma conta gratuita em <a href="https://jsonbin.io" target="_blank" style="color:var(--marsala)">jsonbin.io</a>, gere uma <strong>API Key</strong> e um <strong>Bin</strong> para armazenar seus dados.</p>
+    <div class="form-group">
+      <label>API Key (X-Master-Key)</label>
+      <input type="text" id="cfgApiKey" placeholder="$2a$10$..." />
+    </div>
+    <div class="form-group">
+      <label>Bin ID</label>
+      <input type="text" id="cfgBinId" placeholder="64abc123..." />
+      <small style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;display:block">Deixe em branco para criar um Bin novo automaticamente</small>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeConfig()">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveConfig()">Salvar Configuração</button>
     </div>
   </div>
+</div>
 
-  <script src="script.js"></script>
+<!-- MODAL ADICIONAR CATEGORIA -->
+<div class="modal-overlay" id="modalCat">
+  <div class="modal">
+    <h2>Nova Categoria</h2>
+    <div class="form-group">
+      <label>Emoji</label>
+      <input type="text" id="newCatEmoji" placeholder="🎵" maxlength="2" />
+    </div>
+    <div class="form-group">
+      <label>Nome da Categoria</label>
+      <input type="text" id="newCatName" placeholder="Ex: Buffet, Fotografia..." />
+    </div>
+    <div class="form-group">
+      <label>Orçamento previsto (R$)</label>
+      <input type="number" id="newCatBudget" placeholder="0.00" min="0" step="0.01" />
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeCatModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="addCategory()">Adicionar</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ── STATE ──
+let state = {
+  budget: 0,
+  categories: []
+};
+
+let apiKey = localStorage.getItem('wb_apikey') || '';
+let binId  = localStorage.getItem('wb_binid')  || '';
+
+// ── DEFAULT DATA ──
+const DEFAULT_CATEGORIES = [
+  { id: uid(), emoji: '🏛️', name: 'Espaço / Local', budget: 0, open: true, items: [
+    { id: uid(), name: 'Aluguel do salão', orcado: 0, pago: 0, status: 'orcamento' }
+  ]},
+  { id: uid(), emoji: '🍽️', name: 'Buffet & Gastronomia', budget: 0, open: false, items: [
+    { id: uid(), name: 'Jantar completo', orcado: 0, pago: 0, status: 'orcamento' }
+  ]},
+  { id: uid(), emoji: '📸', name: 'Foto & Vídeo', budget: 0, open: false, items: [
+    { id: uid(), name: 'Fotógrafo', orcado: 0, pago: 0, status: 'orcamento' },
+    { id: uid(), name: 'Filmagem', orcado: 0, pago: 0, status: 'orcamento' }
+  ]},
+  { id: uid(), emoji: '🌸', name: 'Decoração & Flores', budget: 0, open: false, items: [
+    { id: uid(), name: 'Arranjos florais', orcado: 0, pago: 0, status: 'orcamento' }
+  ]},
+  { id: uid(), emoji: '🎵', name: 'Música & Entretenimento', budget: 0, open: false, items: [
+    { id: uid(), name: 'Banda / DJ', orcado: 0, pago: 0, status: 'orcamento' }
+  ]},
+  { id: uid(), emoji: '👗', name: 'Trajes & Beleza', budget: 0, open: false, items: [
+    { id: uid(), name: 'Vestido de noiva', orcado: 0, pago: 0, status: 'orcamento' },
+    { id: uid(), name: 'Terno do noivo', orcado: 0, pago: 0, status: 'orcamento' }
+  ]},
+  { id: uid(), emoji: '💌', name: 'Convites & Papelaria', budget: 0, open: false, items: [
+    { id: uid(), name: 'Convites impressos', orcado: 0, pago: 0, status: 'orcamento' }
+  ]},
+  { id: uid(), emoji: '🎂', name: 'Bolo & Doces', budget: 0, open: false, items: [
+    { id: uid(), name: 'Bolo principal', orcado: 0, pago: 0, status: 'orcamento' }
+  ]},
+  { id: uid(), emoji: '💒', name: 'Cerimônia', budget: 0, open: false, items: [
+    { id: uid(), name: 'Igreja / Cartório', orcado: 0, pago: 0, status: 'orcamento' }
+  ]},
+  { id: uid(), emoji: '🚗', name: 'Transporte', budget: 0, open: false, items: [
+    { id: uid(), name: 'Carro dos noivos', orcado: 0, pago: 0, status: 'orcamento' }
+  ]},
+];
+
+// ── UTILS ──
+function uid() { return Math.random().toString(36).slice(2, 9); }
+
+function fmt(v) {
+  return (v || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+}
+
+function parseMoney(str) {
+  if (!str && str !== 0) return 0;
+  const s = String(str).replace(/[^\d,\.]/g,'').replace(',','.');
+  return parseFloat(s) || 0;
+}
+
+function showToast(msg, type='') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show ' + type;
+  setTimeout(() => t.className = 'toast', 2800);
+}
+
+function setSyncBar(on) {
+  document.getElementById('syncBar').classList.toggle('active', on);
+}
+
+// ── CONFIG ──
+function openConfig() { document.getElementById('modalConfig').classList.add('open'); document.getElementById('cfgApiKey').value = apiKey; document.getElementById('cfgBinId').value = binId; }
+function closeConfig() { document.getElementById('modalConfig').classList.remove('open'); }
+
+function saveConfig() {
+  apiKey = document.getElementById('cfgApiKey').value.trim();
+  binId  = document.getElementById('cfgBinId').value.trim();
+  localStorage.setItem('wb_apikey', apiKey);
+  localStorage.setItem('wb_binid',  binId);
+  closeConfig();
+  updateBanner();
+  showToast('Configuração salva!', 'success');
+  if (apiKey) loadFromCloud();
+}
+
+function updateBanner() {
+  const b = document.getElementById('configBanner');
+  if (apiKey && binId) {
+    b.textContent = '✅ JSONBin configurado · Bin: ' + binId.slice(0,8) + '...';
+    b.className = 'config-banner ok';
+    b.onclick = null;
+  } else {
+    b.innerHTML = '⚙️ Clique aqui para configurar o JSONBin (necessário para salvar na nuvem)';
+    b.className = 'config-banner';
+    b.onclick = openConfig;
+  }
+}
+
+// ── CLOUD ──
+async function saveToCloud() {
+  if (!apiKey) { openConfig(); return; }
+  setSyncBar(true);
+  try {
+    const payload = { budget: state.budget, categories: state.categories };
+    let url, method;
+    if (binId) {
+      url = `https://api.jsonbin.io/v3/b/${binId}`;
+      method = 'PUT';
+    } else {
+      url = 'https://api.jsonbin.io/v3/b';
+      method = 'POST';
+    }
+    const res = await fetch(url, {
+      method,
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Master-Key': apiKey,
+        ...(method === 'POST' ? { 'X-Bin-Name': 'wedding-budget', 'X-Private': 'true' } : {})
+      },
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || 'Erro ao salvar');
+    if (method === 'POST') {
+      binId = data.metadata.id;
+      localStorage.setItem('wb_binid', binId);
+      updateBanner();
+    }
+    showToast('☁️ Salvo na nuvem com sucesso!', 'success');
+  } catch(e) {
+    showToast('Erro ao salvar: ' + e.message, 'error');
+  }
+  setSyncBar(false);
+}
+
+async function loadFromCloud() {
+  if (!apiKey || !binId) { openConfig(); return; }
+  setSyncBar(true);
+  try {
+    const res = await fetch(`https://api.jsonbin.io/v3/b/${binId}/latest`, {
+      headers: { 'X-Master-Key': apiKey }
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || 'Erro ao carregar');
+    const record = data.record;
+    state.budget = record.budget || 0;
+    state.categories = record.categories || [];
+    document.getElementById('budgetInput').value = fmt(state.budget).replace('R$\u00a0','R$ ');
+    render();
+    updateSummary();
+    showToast('🔄 Dados sincronizados!', 'success');
+  } catch(e) {
+    showToast('Erro ao carregar: ' + e.message, 'error');
+  }
+  setSyncBar(false);
+}
+
+// ── SUMMARY ──
+function updateSummary() {
+  const total = state.budget;
+  let gasto = 0, pago = 0;
+  state.categories.forEach(cat => {
+    cat.items.forEach(it => {
+      gasto += it.orcado || 0;
+      if (it.status === 'pago') pago += it.pago || it.orcado || 0;
+    });
+  });
+  const saldo = total - gasto;
+  const pct = total > 0 ? Math.min(100, (gasto/total)*100) : 0;
+
+  document.getElementById('cardTotal').textContent = fmt(total);
+  document.getElementById('cardGasto').textContent = fmt(gasto);
+  document.getElementById('cardGasto').className = 'card-value' + (gasto > total && total > 0 ? ' red' : '');
+  document.getElementById('cardPago').textContent = fmt(pago);
+  document.getElementById('cardSaldo').textContent = fmt(saldo);
+  document.getElementById('cardSaldo').className = 'card-value ' + (saldo >= 0 ? 'green' : 'red');
+  document.getElementById('progressPct').textContent = pct.toFixed(1) + '%';
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('budgetInput').value = total > 0 ? fmt(total).replace('R$\u00a0','R$ ') : '';
+}
+
+// ── BUDGET INPUT ──
+function onBudgetChange(el) {
+  const raw = el.value.replace(/[^\d]/g,'');
+  const val = parseFloat(raw) / 100;
+  state.budget = isNaN(val) ? 0 : val;
+  updateSummary();
+}
+
+// ── RENDER ──
+function render() {
+  const container = document.getElementById('categoriesContainer');
+  container.innerHTML = '';
+  state.categories.forEach(cat => {
+    container.appendChild(buildCategoryEl(cat));
+  });
+}
+
+function buildCategoryEl(cat) {
+  const catGasto = cat.items.reduce((s,it) => s + (it.orcado||0), 0);
+  const catPct = cat.budget > 0 ? Math.min(100,(catGasto/cat.budget)*100) : 0;
+
+  const block = document.createElement('div');
+  block.className = 'category-block';
+  block.dataset.id = cat.id;
+
+  block.innerHTML = `
+    <div class="category-head" onclick="toggleCat('${cat.id}')">
+      <span class="cat-emoji">${cat.emoji}</span>
+      <div class="cat-info">
+        <div class="cat-name">${cat.name}</div>
+        <div class="cat-totals">${cat.items.length} itens · ${cat.budget > 0 ? fmt(cat.budget) + ' previsto' : 'sem orçamento'}</div>
+      </div>
+      <div class="cat-badge">${fmt(catGasto)}</div>
+      <div style="display:flex;gap:4px;align-items:center">
+        <button class="btn-icon" title="Editar" onclick="event.stopPropagation();editCat('${cat.id}')">✏️</button>
+        <button class="btn-icon danger" title="Excluir" onclick="event.stopPropagation();deleteCat('${cat.id}')">🗑️</button>
+        <span class="cat-chevron ${cat.open ? 'open' : ''}">▼</span>
+      </div>
+    </div>
+    <div class="cat-mini-bar"><div class="cat-mini-fill" style="width:${catPct}%"></div></div>
+    <div class="items-wrap ${cat.open ? 'open' : ''}" id="items-${cat.id}">
+      <table class="items-table">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Orçado (R$)</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="tbody-${cat.id}">
+          ${cat.items.map(it => buildItemRow(cat.id, it)).join('')}
+        </tbody>
+      </table>
+      <button class="add-item-btn" onclick="addItem('${cat.id}')">+ Adicionar item</button>
+    </div>
+  `;
+  return block;
+}
+
+function buildItemRow(catId, it) {
+  const statusOptions = ['orcamento','pendente','pago'].map(s =>
+    `<option value="${s}" ${it.status===s?'selected':''}>${s==='orcamento'?'🔵 Orçamento':s==='pendente'?'🟡 Pendente':'🟢 Pago'}</option>`
+  ).join('');
+  return `
+    <tr class="item-row" data-item="${it.id}">
+      <td class="td-name">
+        <input type="text" value="${it.name}" onchange="updateItem('${catId}','${it.id}','name',this.value)" />
+      </td>
+      <td class="td-val">
+        <input type="number" value="${it.orcado||0}" min="0" step="0.01"
+          onchange="updateItem('${catId}','${it.id}','orcado',parseFloat(this.value)||0)" />
+      </td>
+      <td class="td-status">
+        <select onchange="updateItem('${catId}','${it.id}','status',this.value)">
+          ${statusOptions}
+        </select>
+      </td>
+      <td class="td-actions">
+        <button class="btn-icon danger" onclick="deleteItem('${catId}','${it.id}')">✕</button>
+      </td>
+    </tr>
+  `;
+}
+
+// ── TOGGLE CAT ──
+function toggleCat(catId) {
+  const cat = state.categories.find(c => c.id === catId);
+  if (!cat) return;
+  cat.open = !cat.open;
+  const wrap = document.getElementById('items-' + catId);
+  const chevron = document.querySelector(`[data-id="${catId}"] .cat-chevron`);
+  if (wrap) wrap.classList.toggle('open', cat.open);
+  if (chevron) chevron.classList.toggle('open', cat.open);
+}
+
+// ── ITEM OPS ──
+function updateItem(catId, itemId, field, value) {
+  const cat = state.categories.find(c => c.id === catId);
+  if (!cat) return;
+  const item = cat.items.find(i => i.id === itemId);
+  if (!item) return;
+  item[field] = value;
+  updateSummary();
+  // update mini bar
+  const catGasto = cat.items.reduce((s,it) => s + (it.orcado||0), 0);
+  const catPct = cat.budget > 0 ? Math.min(100,(catGasto/cat.budget)*100) : 0;
+  const fill = document.querySelector(`[data-id="${catId}"] .cat-mini-fill`);
+  if (fill) fill.style.width = catPct + '%';
+  const badge = document.querySelector(`[data-id="${catId}"] .cat-badge`);
+  if (badge) badge.textContent = fmt(catGasto);
+}
+
+function addItem(catId) {
+  const cat = state.categories.find(c => c.id === catId);
+  if (!cat) return;
+  const it = { id: uid(), name: 'Novo item', orcado: 0, pago: 0, status: 'orcamento' };
+  cat.items.push(it);
+  const tbody = document.getElementById('tbody-' + catId);
+  if (tbody) {
+    const tr = document.createElement('tr');
+    tr.className = 'item-row';
+    tr.dataset.item = it.id;
+    tr.innerHTML = buildItemRow(catId, it).replace(/<tr[^>]*>|<\/tr>/g, '');
+    tbody.appendChild(tr);
+  }
+  updateSummary();
+}
+
+function deleteItem(catId, itemId) {
+  const cat = state.categories.find(c => c.id === catId);
+  if (!cat) return;
+  cat.items = cat.items.filter(i => i.id !== itemId);
+  const row = document.querySelector(`[data-item="${itemId}"]`);
+  if (row) row.remove();
+  updateSummary();
+}
+
+// ── CATEGORY OPS ──
+function openAddCategory() { document.getElementById('modalCat').classList.add('open'); }
+function closeCatModal() { document.getElementById('modalCat').classList.remove('open'); document.getElementById('newCatName').value=''; document.getElementById('newCatEmoji').value=''; document.getElementById('newCatBudget').value=''; }
+
+function addCategory() {
+  const name = document.getElementById('newCatName').value.trim();
+  const emoji = document.getElementById('newCatEmoji').value.trim() || '📦';
+  const budget = parseFloat(document.getElementById('newCatBudget').value) || 0;
+  if (!name) { showToast('Digite um nome para a categoria', 'error'); return; }
+  const cat = { id: uid(), emoji, name, budget, open: true, items: [] };
+  state.categories.push(cat);
+  const container = document.getElementById('categoriesContainer');
+  container.appendChild(buildCategoryEl(cat));
+  closeCatModal();
+  updateSummary();
+}
+
+function deleteCat(catId) {
+  if (!confirm('Excluir esta categoria e todos os itens?')) return;
+  state.categories = state.categories.filter(c => c.id !== catId);
+  const el = document.querySelector(`[data-id="${catId}"]`);
+  if (el) el.remove();
+  updateSummary();
+}
+
+let editingCatId = null;
+function editCat(catId) {
+  const cat = state.categories.find(c => c.id === catId);
+  if (!cat) return;
+  editingCatId = catId;
+  document.getElementById('newCatEmoji').value = cat.emoji;
+  document.getElementById('newCatName').value = cat.name;
+  document.getElementById('newCatBudget').value = cat.budget;
+  document.getElementById('modalCat').classList.add('open');
+  // swap button
+  const btn = document.querySelector('#modalCat .btn-primary');
+  btn.textContent = 'Salvar';
+  btn.onclick = saveCatEdit;
+}
+function saveCatEdit() {
+  const cat = state.categories.find(c => c.id === editingCatId);
+  if (!cat) return;
+  cat.emoji = document.getElementById('newCatEmoji').value.trim() || cat.emoji;
+  cat.name = document.getElementById('newCatName').value.trim() || cat.name;
+  cat.budget = parseFloat(document.getElementById('newCatBudget').value) || 0;
+  // re-render just this block
+  const oldEl = document.querySelector(`[data-id="${editingCatId}"]`);
+  if (oldEl) oldEl.replaceWith(buildCategoryEl(cat));
+  closeCatModal();
+  // restore button
+  setTimeout(() => {
+    const btn = document.querySelector('#modalCat .btn-primary');
+    btn.textContent = 'Adicionar';
+    btn.onclick = addCategory;
+  }, 300);
+  editingCatId = null;
+  updateSummary();
+}
+
+// Close modals on overlay click
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay) overlay.classList.remove('open');
+  });
+});
+
+// ── INIT ──
+function init() {
+  state.categories = DEFAULT_CATEGORIES;
+  updateBanner();
+  render();
+  updateSummary();
+  if (apiKey && binId) loadFromCloud();
+}
+
+init();
+</script>
 </body>
 </html>
