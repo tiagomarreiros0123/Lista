@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Meu Casamento 💍</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -17,106 +17,215 @@
   --warn:#c07a1a;--warn-bg:#fdf6e8;
   --sh:0 2px 16px rgba(42,33,24,.07);--sh-lg:0 8px 40px rgba(42,33,24,.13);
   --r:12px;--fd:'Cormorant Garamond',Georgia,serif;--fb:'DM Sans',system-ui,sans-serif;
+  --header-h:64px;
 }
-body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.6}
+
+html{-webkit-text-size-adjust:100%}
+body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.6;overflow-x:hidden}
+
+/* ── Loading ─────────────────────────── */
 #loadingOverlay{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;gap:1rem}
 .spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 #loadingOverlay p{font-family:var(--fd);font-size:1.1rem;font-style:italic;color:var(--muted)}
-.sync-badge{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--success);background:var(--success-bg);border:1px solid #a8d5bb;border-radius:99px;padding:3px 11px;font-weight:500}
+
+/* ── Sync badge ──────────────────────── */
+.sync-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:var(--success);background:var(--success-bg);border:1px solid #a8d5bb;border-radius:99px;padding:3px 10px;font-weight:500;white-space:nowrap}
 .sync-badge.syncing{color:var(--warn);background:var(--warn-bg);border-color:#f0cc88}
 .sync-badge.error{color:var(--danger);background:var(--danger-bg);border-color:#f0b8b8}
-header{background:var(--card);border-bottom:1px solid var(--border);padding:1.2rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;position:sticky;top:0;z-index:100;box-shadow:var(--sh)}
-.h-left{display:flex;align-items:baseline;gap:.75rem;flex-wrap:wrap}
-.h-left h1{font-family:var(--fd);font-size:1.9rem;font-weight:400;color:var(--accent)}
-.h-left span{font-family:var(--fd);font-size:1.05rem;font-style:italic;color:var(--muted);font-weight:300}
-.h-right{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
-.h-right label{font-size:12px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:.08em}
-.h-right input[type=date]{border:1px solid var(--border-s);border-radius:8px;padding:6px 12px;font-family:var(--fb);font-size:14px;color:var(--text);background:var(--bg);cursor:pointer;outline:none}
-.countdown{background:linear-gradient(135deg,var(--accent) 0%,#d4a574 100%);color:#fff;text-align:center;padding:.55rem 2rem;font-size:14px;letter-spacing:.04em;font-weight:500}
-.container{max-width:1100px;margin:0 auto;padding:2rem}
-.couple-bar{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.2rem 1.5rem;margin-bottom:1.5rem;box-shadow:var(--sh);display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
-.couple-bar .lbl{font-size:12px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;white-space:nowrap}
-.couple-bar input{flex:1;min-width:120px;border:1px solid var(--border-s);border-radius:8px;padding:8px 14px;font-family:var(--fd);font-size:1.15rem;color:var(--text);background:var(--bg);outline:none;transition:border-color .15s}
+
+/* ── Header ──────────────────────────── */
+header{
+  background:var(--card);border-bottom:1px solid var(--border);
+  padding:.9rem 1.25rem;display:flex;align-items:center;
+  justify-content:space-between;gap:.75rem;
+  position:sticky;top:0;z-index:100;box-shadow:var(--sh);
+  min-height:var(--header-h);
+}
+.h-left{display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap;min-width:0}
+.h-left h1{font-family:var(--fd);font-size:1.6rem;font-weight:400;color:var(--accent);white-space:nowrap}
+.h-left span{font-family:var(--fd);font-size:.95rem;font-style:italic;color:var(--muted);font-weight:300;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:160px}
+.h-right{display:flex;align-items:center;gap:.6rem;flex-shrink:0}
+.h-right label{font-size:11px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:.08em;display:none}
+.h-right input[type=date]{border:1px solid var(--border-s);border-radius:8px;padding:5px 9px;font-family:var(--fb);font-size:13px;color:var(--text);background:var(--bg);cursor:pointer;outline:none;max-width:145px}
+
+/* ── Countdown ───────────────────────── */
+.countdown{background:linear-gradient(135deg,var(--accent) 0%,#d4a574 100%);color:#fff;text-align:center;padding:.5rem 1rem;font-size:13px;letter-spacing:.04em;font-weight:500;line-height:1.4}
+
+/* ── Container ───────────────────────── */
+.container{max-width:1100px;margin:0 auto;padding:1.25rem 1rem}
+
+/* ── Couple bar ──────────────────────── */
+.couple-bar{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1rem 1.25rem;margin-bottom:1.25rem;box-shadow:var(--sh);display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}
+.couple-bar .lbl{font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;white-space:nowrap}
+.couple-bar input{flex:1;min-width:100px;border:1px solid var(--border-s);border-radius:8px;padding:7px 12px;font-family:var(--fd);font-size:1.05rem;color:var(--text);background:var(--bg);outline:none;transition:border-color .15s}
 .couple-bar input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(176,125,74,.1)}
-.couple-and{font-family:var(--fd);font-size:1.4rem;font-style:italic;color:var(--accent)}
-.summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:1.5rem}
-.sc{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.2rem 1.5rem;box-shadow:var(--sh);transition:transform .15s}
-.sc:hover{transform:translateY(-2px)}
-.sc .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:500;margin-bottom:.3rem}
-.sc .val{font-family:var(--fd);font-size:1.85rem;font-weight:600;color:var(--text);line-height:1.1}
-.sc .sub{font-size:12px;color:var(--muted);margin-top:.2rem}
+.couple-and{font-family:var(--fd);font-size:1.3rem;font-style:italic;color:var(--accent);flex-shrink:0}
+
+/* ── Summary grid ────────────────────── */
+.summary-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem;margin-bottom:1.25rem}
+.sc{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1rem 1.1rem;box-shadow:var(--sh)}
+.sc .lbl{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:500;margin-bottom:.25rem}
+.sc .val{font-family:var(--fd);font-size:1.55rem;font-weight:600;color:var(--text);line-height:1.1}
+.sc .sub{font-size:11px;color:var(--muted);margin-top:.2rem}
 .sc.ca{border-color:var(--accent)}.sc.ca .val{color:var(--accent)}
 .sc.cd{border-color:var(--danger);background:var(--danger-bg)}.sc.cd .val{color:var(--danger)}
 .sc.cs{border-color:var(--success);background:var(--success-bg)}.sc.cs .val{color:var(--success)}
-.budget-row{display:flex;align-items:center;gap:8px;margin-top:6px}
-.budget-row input{width:140px;border:1px solid var(--border-s);border-radius:8px;padding:5px 10px;font-family:var(--fb);font-size:13px;color:var(--text);background:var(--bg);outline:none}
+.budget-row{display:flex;align-items:center;gap:6px;margin-top:6px;flex-wrap:wrap}
+.budget-row input{width:120px;border:1px solid var(--border-s);border-radius:8px;padding:4px 9px;font-family:var(--fb);font-size:13px;color:var(--text);background:var(--bg);outline:none}
 .budget-row input:focus{border-color:var(--accent)}
-.budget-row span{font-size:12px;color:var(--muted)}
-.progress-sec{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.4rem 1.5rem;margin-bottom:1.5rem;box-shadow:var(--sh)}
-.progress-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:.7rem}
-.progress-hd h3{font-family:var(--fd);font-size:1.05rem;font-weight:400}
+.budget-row span{font-size:11px;color:var(--muted)}
+
+/* ── Progress ────────────────────────── */
+.progress-sec{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.1rem 1.25rem;margin-bottom:1.25rem;box-shadow:var(--sh)}
+.progress-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:.65rem}
+.progress-hd h3{font-family:var(--fd);font-size:1rem;font-weight:400}
 .progress-hd span{font-size:13px;color:var(--muted);font-weight:500}
 .progress-track{background:var(--border);border-radius:99px;height:10px;overflow:hidden}
 .progress-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--accent),#d4a574);transition:width .5s ease}
 .progress-fill.over{background:linear-gradient(90deg,var(--danger),#e74c3c)}
-.chart-sec{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;margin-bottom:1.5rem;box-shadow:var(--sh)}
-.chart-sec h3{font-family:var(--fd);font-size:1.1rem;font-weight:400;margin-bottom:1rem}
-.chart-bars{display:flex;flex-direction:column;gap:10px}
-.cbr{display:grid;grid-template-columns:130px 1fr 95px;align-items:center;gap:12px}
-.cbl{font-size:13px;color:var(--text);font-weight:500;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.cbt{background:var(--border);border-radius:99px;height:11px;overflow:hidden}
+
+/* ── Chart ───────────────────────────── */
+.chart-sec{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;margin-bottom:1.25rem;box-shadow:var(--sh)}
+.chart-sec h3{font-family:var(--fd);font-size:1.05rem;font-weight:400;margin-bottom:.9rem}
+.chart-bars{display:flex;flex-direction:column;gap:9px}
+.cbr{display:grid;grid-template-columns:110px 1fr 85px;align-items:center;gap:10px}
+.cbl{font-size:12px;color:var(--text);font-weight:500;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cbt{background:var(--border);border-radius:99px;height:10px;overflow:hidden}
 .cbf{height:100%;border-radius:99px;transition:width .4s ease}
 .cbv{font-size:12px;color:var(--muted);font-weight:500;text-align:right;white-space:nowrap}
+
+/* ── Section header ──────────────────── */
 .sec-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.75rem}
-.sec-hd h2{font-family:var(--fd);font-size:1.5rem;font-weight:400}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:8px;font-family:var(--fb);font-size:14px;font-weight:500;cursor:pointer;border:none;transition:all .15s}
-.btn-p{background:var(--accent);color:#fff}.btn-p:hover{background:var(--accent-d)}
+.sec-hd h2{font-family:var(--fd);font-size:1.4rem;font-weight:400}
+
+/* ── Buttons ─────────────────────────── */
+.btn{display:inline-flex;align-items:center;gap:5px;padding:8px 16px;border-radius:8px;font-family:var(--fb);font-size:14px;font-weight:500;cursor:pointer;border:none;transition:all .15s;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.btn-p{background:var(--accent);color:#fff}.btn-p:hover,.btn-p:active{background:var(--accent-d)}
 .btn-o{background:transparent;color:var(--accent);border:1px solid var(--accent)}.btn-o:hover{background:var(--accent-l)}
 .btn-g{background:transparent;color:var(--muted);border:1px solid var(--border)}.btn-g:hover{background:var(--border);color:var(--text)}
 .btn-d{background:transparent;color:var(--danger);border:1px solid #e8bfbf}.btn-d:hover{background:var(--danger-bg)}
-.btn-sm{padding:5px 10px;font-size:12px}
-.tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem}
-.tab{padding:5px 14px;border-radius:99px;font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:var(--card);color:var(--muted);transition:all .15s}
-.tab:hover{border-color:var(--accent);color:var(--accent)}
+.btn-sm{padding:6px 10px;font-size:12px}
+
+/* ── Tabs ────────────────────────────── */
+.tabs{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.9rem;overflow-x:auto;padding-bottom:2px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:5px 13px;border-radius:99px;font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:var(--card);color:var(--muted);transition:all .15s;white-space:nowrap;flex-shrink:0;touch-action:manipulation}
+.tab:active{transform:scale(.97)}
 .tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
-.tbl-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden;overflow-x:auto}
-table{width:100%;border-collapse:collapse;min-width:600px}
-thead th{background:var(--accent-l);color:var(--accent-d);font-size:11px;text-transform:uppercase;letter-spacing:.1em;font-weight:500;padding:.85rem 1rem;text-align:left;white-space:nowrap}
-tbody tr{border-top:1px solid var(--border);transition:background .1s}
-tbody tr:hover{background:var(--accent-l)}
-tbody td{padding:.8rem 1rem;font-size:14px;vertical-align:middle}
+
+/* ── Table (desktop) ─────────────────── */
+.tbl-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden}
+.tbl-desktop{display:block;overflow-x:auto}
+.tbl-desktop table{width:100%;border-collapse:collapse;min-width:580px}
+.tbl-desktop thead th{background:var(--accent-l);color:var(--accent-d);font-size:10px;text-transform:uppercase;letter-spacing:.1em;font-weight:500;padding:.8rem 1rem;text-align:left;white-space:nowrap}
+.tbl-desktop tbody tr{border-top:1px solid var(--border);transition:background .1s}
+.tbl-desktop tbody tr:hover{background:var(--accent-l)}
+.tbl-desktop tbody td{padding:.75rem 1rem;font-size:13px;vertical-align:middle}
 .td-name{font-weight:500}
-.td-val{font-family:var(--fd);font-size:1rem;font-weight:600;white-space:nowrap}
-.td-act{display:flex;gap:5px}
-.badge{display:inline-block;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:500;white-space:nowrap}
+.td-val{font-family:var(--fd);font-size:.95rem;font-weight:600;white-space:nowrap}
+.td-act{display:flex;gap:4px;flex-wrap:nowrap}
+
+/* ── Cards (mobile list) ─────────────── */
+.cards-list{display:none;flex-direction:column;gap:.65rem;padding:.75rem}
+.item-card{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:.85rem 1rem;display:flex;flex-direction:column;gap:.55rem}
+.ic-top{display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem}
+.ic-name{font-weight:500;font-size:14px;flex:1}
+.ic-note{font-size:11px;color:var(--muted);margin-top:1px}
+.ic-vals{display:flex;gap:1.2rem;flex-wrap:wrap}
+.ic-val-item{display:flex;flex-direction:column}
+.ic-val-item .lbl{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:500}
+.ic-val-item .val{font-family:var(--fd);font-size:1rem;font-weight:600}
+.ic-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.4rem}
+.ic-cat{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--muted)}
+.ic-actions{display:flex;gap:.35rem}
+
+/* ── Badge ───────────────────────────── */
+.badge{display:inline-block;padding:3px 9px;border-radius:99px;font-size:11px;font-weight:500;white-space:nowrap}
 .b-paid{background:var(--success-bg);color:var(--success);border:1px solid #a8d5bb}
 .b-pend{background:var(--warn-bg);color:var(--warn);border:1px solid #f0cc88}
 .b-over{background:var(--danger-bg);color:var(--danger);border:1px solid #f0b8b8}
-.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}
-.empty{text-align:center;padding:3rem;color:var(--muted)}
-.empty .icon{font-size:2.8rem;margin-bottom:.75rem;opacity:.35}
-.empty p{font-family:var(--fd);font-size:1.2rem;font-style:italic;margin-bottom:1rem}
-.modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.42);z-index:200;align-items:center;justify-content:center;padding:1rem}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:4px}
+
+/* ── Empty state ─────────────────────── */
+.empty{text-align:center;padding:2.5rem 1rem;color:var(--muted)}
+.empty .icon{font-size:2.5rem;margin-bottom:.65rem;opacity:.35}
+.empty p{font-family:var(--fd);font-size:1.1rem;font-style:italic;margin-bottom:.9rem}
+
+/* ── Modal ───────────────────────────── */
+.modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.42);z-index:200;align-items:flex-end;justify-content:center;padding:0}
 .modal-ov.open{display:flex}
-.modal{background:var(--card);border-radius:16px;padding:2rem;width:100%;max-width:500px;box-shadow:var(--sh-lg);animation:slideUp .2s ease;max-height:90vh;overflow-y:auto}
-@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
-.modal h2{font-family:var(--fd);font-size:1.6rem;font-weight:400;margin-bottom:1.5rem;color:var(--accent)}
-.fg{margin-bottom:1rem}
-.fg label{display:block;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:.35rem}
-.fg input,.fg select,.fg textarea{width:100%;padding:9px 13px;border:1px solid var(--border-s);border-radius:8px;font-family:var(--fb);font-size:14px;color:var(--text);background:var(--bg);outline:none;transition:border-color .15s}
+.modal{background:var(--card);border-radius:20px 20px 0 0;padding:1.5rem 1.25rem 2rem;width:100%;max-width:100%;box-shadow:var(--sh-lg);animation:slideUp .22s ease;max-height:92vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
+@keyframes slideUp{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-handle{width:40px;height:4px;background:var(--border-s);border-radius:99px;margin:0 auto .9rem}
+.modal h2{font-family:var(--fd);font-size:1.45rem;font-weight:400;margin-bottom:1.25rem;color:var(--accent)}
+.fg{margin-bottom:.85rem}
+.fg label{display:block;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:.3rem}
+.fg input,.fg select,.fg textarea{width:100%;padding:10px 13px;border:1px solid var(--border-s);border-radius:8px;font-family:var(--fb);font-size:15px;color:var(--text);background:var(--bg);outline:none;transition:border-color .15s;-webkit-appearance:none;appearance:none}
 .fg input:focus,.fg select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(176,125,74,.1)}
-.fr{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.modal-ft{display:flex;justify-content:flex-end;gap:.75rem;margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--border)}
-.notes-sec{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;margin-top:1.5rem;box-shadow:var(--sh)}
-.notes-sec h3{font-family:var(--fd);font-size:1.1rem;font-weight:400;margin-bottom:.75rem}
-.notes-sec textarea{width:100%;min-height:80px;border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-family:var(--fb);font-size:14px;color:var(--text);background:var(--bg);resize:vertical;outline:none;transition:border-color .15s}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.modal-ft{display:flex;justify-content:flex-end;gap:.65rem;margin-top:1.25rem;padding-top:1.1rem;border-top:1px solid var(--border)}
+.modal-ft .btn{flex:1}
+
+/* ── Notes ───────────────────────────── */
+.notes-sec{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;margin-top:1.25rem;box-shadow:var(--sh)}
+.notes-sec h3{font-family:var(--fd);font-size:1.05rem;font-weight:400;margin-bottom:.65rem}
+.notes-sec textarea{width:100%;min-height:75px;border:1px solid var(--border);border-radius:8px;padding:10px 13px;font-family:var(--fb);font-size:14px;color:var(--text);background:var(--bg);resize:vertical;outline:none;transition:border-color .15s}
 .notes-sec textarea:focus{border-color:var(--accent)}
-footer{text-align:center;padding:2rem;color:var(--muted);border-top:1px solid var(--border);margin-top:2rem;font-family:var(--fd);font-size:1rem;font-style:italic}
-@media(max-width:640px){
-  .container{padding:1rem}header{padding:1rem}
-  .fr{grid-template-columns:1fr}.cbr{grid-template-columns:90px 1fr 65px}
-  .summary-grid{grid-template-columns:1fr 1fr}.h-left h1{font-size:1.5rem}
+
+/* ── Footer ──────────────────────────── */
+footer{text-align:center;padding:1.5rem 1rem;color:var(--muted);border-top:1px solid var(--border);margin-top:1.5rem;font-family:var(--fd);font-size:.95rem;font-style:italic}
+
+/* ── FAB (mobile add button) ─────────── */
+.fab{display:none;position:fixed;bottom:1.5rem;right:1.25rem;z-index:90;background:var(--accent);color:#fff;border:none;border-radius:50%;width:54px;height:54px;font-size:1.5rem;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(176,125,74,.45);cursor:pointer;touch-action:manipulation}
+.fab:active{transform:scale(.93)}
+
+/* ================================================================
+   RESPONSIVE BREAKPOINTS
+================================================================ */
+
+/* ── Tablet (≥768px) ─────────────────── */
+@media(min-width:768px){
+  .h-right label{display:block}
+  .summary-grid{grid-template-columns:repeat(4,1fr)}
+  .sc .val{font-size:1.75rem}
+  .container{padding:1.5rem 1.5rem}
+  .modal-ov{align-items:center;padding:1rem}
+  .modal{border-radius:16px;max-width:520px;padding:2rem}
+  .modal-handle{display:none}
+  .modal-ft .btn{flex:none}
+}
+
+/* ── Desktop (≥1024px) ───────────────── */
+@media(min-width:1024px){
+  .h-left h1{font-size:1.9rem}
+  .h-left span{font-size:1.05rem;max-width:none}
+  .h-right input[type=date]{font-size:14px}
+  .container{padding:2rem}
+  .cbr{grid-template-columns:130px 1fr 95px}
+}
+
+/* ── Mobile only (< 640px) ───────────── */
+@media(max-width:639px){
+  .summary-grid{grid-template-columns:1fr 1fr}
+  .sc .val{font-size:1.35rem}
+  .sc{padding:.85rem 1rem}
+  .tbl-desktop{display:none}
+  .cards-list{display:flex}
+  .fab{display:flex}
+  .sec-hd .btn-p{display:none} /* hide desktop add btn, use FAB instead */
+  .cbr{grid-template-columns:80px 1fr 65px}
+  .cbl{font-size:11px}
+  .cbv{font-size:11px}
+  .fr{grid-template-columns:1fr}
+  .couple-bar{gap:.5rem}
+  .couple-bar input{min-width:80px;font-size:1rem}
+}
+
+/* ── Very small (< 360px) ────────────── */
+@media(max-width:359px){
+  .summary-grid{grid-template-columns:1fr}
+  .h-left h1{font-size:1.35rem}
 }
 </style>
 </head>
@@ -134,7 +243,7 @@ footer{text-align:center;padding:2rem;color:var(--muted);border-top:1px solid va
   </div>
   <div class="h-right">
     <span class="sync-badge" id="syncBadge">☁ sincronizado</span>
-    <label>Data do casamento</label>
+    <label>Data</label>
     <input type="date" id="weddingDate" onchange="onSettingsChange()">
   </div>
 </header>
@@ -155,7 +264,7 @@ footer{text-align:center;padding:2rem;color:var(--muted);border-top:1px solid va
       <div class="val" id="summBudget">R$ 0</div>
       <div class="budget-row">
         <input type="number" id="budgetInput" placeholder="0" onchange="onSettingsChange()">
-        <span>✏️ editar</span>
+        <span>✏️</span>
       </div>
     </div>
     <div class="sc">
@@ -164,7 +273,7 @@ footer{text-align:center;padding:2rem;color:var(--muted);border-top:1px solid va
       <div class="sub" id="summSpentSub">0 itens</div>
     </div>
     <div class="sc cs" id="summLeftCard">
-      <div class="lbl">Saldo Disponível</div>
+      <div class="lbl">Saldo</div>
       <div class="val" id="summLeft">R$ 0</div>
       <div class="sub" id="summLeftSub">—</div>
     </div>
@@ -188,7 +297,7 @@ footer{text-align:center;padding:2rem;color:var(--muted);border-top:1px solid va
   <div class="chart-sec">
     <h3>Gastos por categoria</h3>
     <div class="chart-bars" id="chartBars">
-      <div class="empty" style="padding:1.5rem"><p>Adicione itens para ver o gráfico</p></div>
+      <div class="empty" style="padding:1.2rem"><p>Adicione itens para ver o gráfico</p></div>
     </div>
   </div>
 
@@ -199,16 +308,21 @@ footer{text-align:center;padding:2rem;color:var(--muted);border-top:1px solid va
 
   <div class="tabs" id="tabs"></div>
 
+  <!-- Desktop table -->
   <div class="tbl-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th>Item</th><th>Categoria</th><th>Valor Est.</th>
-          <th>Valor Real</th><th>Vencimento</th><th>Status</th><th>Ações</th>
-        </tr>
-      </thead>
-      <tbody id="tbody"></tbody>
-    </table>
+    <div class="tbl-desktop">
+      <table>
+        <thead>
+          <tr>
+            <th>Item</th><th>Categoria</th><th>Valor Est.</th>
+            <th>Valor Real</th><th>Vencimento</th><th>Status</th><th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+    <!-- Mobile cards -->
+    <div class="cards-list" id="cardsList"></div>
   </div>
 
   <div class="notes-sec">
@@ -219,9 +333,13 @@ footer{text-align:center;padding:2rem;color:var(--muted);border-top:1px solid va
 
 <footer>Feito com amor para o dia mais especial ✨</footer>
 
+<!-- FAB mobile -->
+<button class="fab" onclick="openModal()" aria-label="Adicionar item">+</button>
+
 <!-- MODAL -->
 <div class="modal-ov" id="modalOv" onclick="closeModalOutside(event)">
   <div class="modal">
+    <div class="modal-handle"></div>
     <h2 id="modalTitle">Adicionar item</h2>
     <div class="fr">
       <div class="fg"><label>Nome do item *</label><input type="text" id="fName" placeholder="Ex: Vestido de noiva"></div>
@@ -235,8 +353,8 @@ footer{text-align:center;padding:2rem;color:var(--muted);border-top:1px solid va
       </div>
     </div>
     <div class="fr">
-      <div class="fg"><label>Valor estimado (R$) *</label><input type="number" id="fEst" placeholder="0,00" step="0.01" min="0"></div>
-      <div class="fg"><label>Valor real (R$)</label><input type="number" id="fReal" placeholder="0,00" step="0.01" min="0"></div>
+      <div class="fg"><label>Valor estimado (R$) *</label><input type="number" id="fEst" placeholder="0,00" step="0.01" min="0" inputmode="decimal"></div>
+      <div class="fg"><label>Valor real (R$)</label><input type="number" id="fReal" placeholder="0,00" step="0.01" min="0" inputmode="decimal"></div>
     </div>
     <div class="fr">
       <div class="fg"><label>Vencimento</label><input type="date" id="fDue"></div>
@@ -254,13 +372,7 @@ footer{text-align:center;padding:2rem;color:var(--muted);border-top:1px solid va
 
 <script>
 // ================================================================
-//  ✏️  COLE SUA MASTER KEY DO JSONBIN.IO AQUI ABAIXO
-// ================================================================
 const MASTER_KEY = "$2a$10$H8/dbUWlIFxYwYbkKH/iwuYxlNFW1ycU9EmaWExCh7/XVeVCe1C3O";
-// ================================================================
-//  ✏️  SE JÁ TIVER UM BIN CRIADO, COLE O ID AQUI (opcional)
-//      Deixe "" para criar automaticamente na primeira vez
-// ================================================================
 const BIN_ID_FIXO = "69fba166c0954111d8e82c4d";
 // ================================================================
 
@@ -278,7 +390,6 @@ const CATS = {
   "Beleza":"#d47a8a","Lua de Mel":"#8a6ad4","Outros":"#888"
 };
 
-// ── API helpers ──────────────────────────────────────────────
 function hdrs(){ return {"Content-Type":"application/json","X-Master-Key":MASTER_KEY}; }
 
 async function createBin(){
@@ -305,7 +416,6 @@ async function writeBin(){
   });
 }
 
-// ── Init ─────────────────────────────────────────────────────
 async function init(){
   try {
     if(!BIN_ID) await createBin();
@@ -330,7 +440,6 @@ function applySettings(){
   updateCouple(); updateCountdown();
 }
 
-// ── Auto-save ────────────────────────────────────────────────
 function scheduleSave(){
   clearTimeout(saveTimer);
   setSyncing();
@@ -351,10 +460,9 @@ function onSettingsChange(){
   updateCouple(); updateCountdown(); render(); scheduleSave();
 }
 
-// ── Sync badge ───────────────────────────────────────────────
 function setSyncOk()  { const b=document.getElementById("syncBadge"); b.textContent="☁ sincronizado"; b.className="sync-badge"; }
 function setSyncing() { const b=document.getElementById("syncBadge"); b.textContent="⏳ salvando..."; b.className="sync-badge syncing"; }
-function setSyncErr() { const b=document.getElementById("syncBadge"); b.textContent="⚠ erro — verifique a MASTER_KEY"; b.className="sync-badge error"; }
+function setSyncErr() { const b=document.getElementById("syncBadge"); b.textContent="⚠ erro"; b.className="sync-badge error"; }
 
 function updateCouple(){
   const b=document.getElementById("bride").value, g=document.getElementById("groom").value;
@@ -372,6 +480,11 @@ function updateCountdown(){
   else              bar.textContent=`Faltam ${diff} dias para o casamento 💕`;
 }
 function fmt(v){return "R$ "+Number(v||0).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2});}
+function fmtShort(v){
+  const n=Number(v||0);
+  if(n>=1000) return "R$ "+Math.round(n/1000)+"k";
+  return "R$ "+n.toLocaleString("pt-BR",{minimumFractionDigits:0,maximumFractionDigits:0});
+}
 function fmtDate(d){if(!d)return "—";const p=d.split("-");return p[2]+"/"+p[1]+"/"+p[0];}
 function isOverdue(item){
   if(item.status==="paid"||!item.due)return false;
@@ -379,7 +492,6 @@ function isOverdue(item){
   return new Date(item.due+"T00:00:00")<today;
 }
 
-// ── Render ───────────────────────────────────────────────────
 function render(){
   const items=state.items;
   const budget=parseFloat(document.getElementById("budgetInput").value)||0;
@@ -412,7 +524,7 @@ function render(){
   const entries=Object.entries(catT).sort((a,b)=>b[1]-a[1]);
   const maxV=Math.max(...entries.map(e=>e[1]),1);
   document.getElementById("chartBars").innerHTML=entries.length===0
-    ?`<div class="empty" style="padding:1.5rem"><p>Adicione itens para ver o gráfico</p></div>`
+    ?`<div class="empty" style="padding:1.2rem"><p>Adicione itens para ver o gráfico</p></div>`
     :entries.map(([cat,val])=>`
       <div class="cbr">
         <div class="cbl"><span class="dot" style="background:${CATS[cat]||'#888'}"></span>${cat}</div>
@@ -420,29 +532,73 @@ function render(){
         <div class="cbv">${fmt(val)}</div>
       </div>`).join("");
 
+  // ── Desktop table ──
   const tbody=document.getElementById("tbody");
   if(filtered.length===0){
-    tbody.innerHTML=`<tr><td colspan="7"><div class="empty"><div class="icon">💐</div><p>Nenhum item${activeTab!=='Todos'?' nesta categoria':''}</p><button class="btn btn-p" onclick="openModal()">+ Adicionar item</button></div></td></tr>`;
-    return;
+    tbody.innerHTML=`<tr><td colspan="7"><div class="empty"><div class="icon">💐</div><p>Nenhum item${activeTab!=='Todos'?' nesta categoria':''}</p></div></td></tr>`;
+  } else {
+    tbody.innerHTML=filtered.map(item=>{
+      const over=isOverdue(item);
+      const badge=item.status==="paid"?`<span class="badge b-paid">✓ Pago</span>`:over?`<span class="badge b-over">⚠ Vencido</span>`:`<span class="badge b-pend">⏳ Pendente</span>`;
+      const rc=item.real&&parseFloat(item.real)>parseFloat(item.est)?"color:var(--danger)":"";
+      return `<tr>
+        <td class="td-name">${item.name}${item.note?`<br><span style="font-size:11px;color:var(--muted);font-weight:400">${item.note}</span>`:""}</td>
+        <td><span class="dot" style="background:${CATS[item.cat]||'#888'}"></span>${item.cat}</td>
+        <td class="td-val">${fmt(item.est)}</td>
+        <td class="td-val" style="${rc}">${item.real?fmt(item.real):"—"}</td>
+        <td>${fmtDate(item.due)}</td>
+        <td>${badge}</td>
+        <td class="td-act">
+          <button class="btn btn-o btn-sm" onclick="editItem('${item.id}')">✏️</button>
+          <button class="btn btn-d btn-sm" onclick="deleteItem('${item.id}')">🗑</button>
+          ${item.status!=="paid"?`<button class="btn btn-g btn-sm" onclick="togglePaid('${item.id}')" title="Marcar como pago">✓</button>`:""}
+        </td>
+      </tr>`;
+    }).join("");
   }
-  tbody.innerHTML=filtered.map(item=>{
-    const over=isOverdue(item);
-    const badge=item.status==="paid"?`<span class="badge b-paid">✓ Pago</span>`:over?`<span class="badge b-over">⚠ Vencido</span>`:`<span class="badge b-pend">⏳ Pendente</span>`;
-    const rc=item.real&&parseFloat(item.real)>parseFloat(item.est)?"color:var(--danger)":"";
-    return `<tr>
-      <td class="td-name">${item.name}${item.note?`<br><span style="font-size:12px;color:var(--muted);font-weight:400">${item.note}</span>`:""}</td>
-      <td><span class="dot" style="background:${CATS[item.cat]||'#888'}"></span>${item.cat}</td>
-      <td class="td-val">${fmt(item.est)}</td>
-      <td class="td-val" style="${rc}">${item.real?fmt(item.real):"—"}</td>
-      <td>${fmtDate(item.due)}</td>
-      <td>${badge}</td>
-      <td class="td-act">
-        <button class="btn btn-o btn-sm" onclick="editItem('${item.id}')">✏️</button>
-        <button class="btn btn-d btn-sm" onclick="deleteItem('${item.id}')">🗑</button>
-        ${item.status!=="paid"?`<button class="btn btn-g btn-sm" onclick="togglePaid('${item.id}')" title="Marcar como pago">✓</button>`:""}
-      </td>
-    </tr>`;
-  }).join("");
+
+  // ── Mobile cards ──
+  const cardsList=document.getElementById("cardsList");
+  if(filtered.length===0){
+    cardsList.innerHTML=`<div class="empty"><div class="icon">💐</div><p>Nenhum item${activeTab!=='Todos'?' nesta categoria':''}</p></div>`;
+  } else {
+    cardsList.innerHTML=filtered.map(item=>{
+      const over=isOverdue(item);
+      const badge=item.status==="paid"?`<span class="badge b-paid">✓ Pago</span>`:over?`<span class="badge b-over">⚠ Vencido</span>`:`<span class="badge b-pend">⏳ Pendente</span>`;
+      const rc=item.real&&parseFloat(item.real)>parseFloat(item.est)?"color:var(--danger)":"";
+      return `<div class="item-card">
+        <div class="ic-top">
+          <div>
+            <div class="ic-name">${item.name}</div>
+            ${item.note?`<div class="ic-note">${item.note}</div>`:""}
+          </div>
+          ${badge}
+        </div>
+        <div class="ic-vals">
+          <div class="ic-val-item">
+            <span class="lbl">Estimado</span>
+            <span class="val">${fmt(item.est)}</span>
+          </div>
+          ${item.real?`<div class="ic-val-item">
+            <span class="lbl">Real</span>
+            <span class="val" style="${rc}">${fmt(item.real)}</span>
+          </div>`:""}
+          ${item.due?`<div class="ic-val-item">
+            <span class="lbl">Venc.</span>
+            <span class="val" style="font-size:.85rem">${fmtDate(item.due)}</span>
+          </div>`:""}
+        </div>
+        <div class="ic-footer">
+          <span class="ic-cat"><span class="dot" style="background:${CATS[item.cat]||'#888'}"></span>${item.cat}</span>
+          <div class="ic-actions">
+            <button class="btn btn-o btn-sm" onclick="editItem('${item.id}')">✏️</button>
+            <button class="btn btn-d btn-sm" onclick="deleteItem('${item.id}')">🗑</button>
+            ${item.status!=="paid"?`<button class="btn btn-g btn-sm" onclick="togglePaid('${item.id}')" title="Marcar como pago">✓</button>`:""}
+          </div>
+        </div>
+      </div>`;
+    }).join("");
+  }
 }
 
 function setTab(t){activeTab=t;render();}
@@ -455,7 +611,7 @@ function openModal(){
   document.getElementById("fCat").value="Cerimônia";
   document.getElementById("fStatus").value="pending";
   document.getElementById("modalOv").classList.add("open");
-  setTimeout(()=>document.getElementById("fName").focus(),100);
+  setTimeout(()=>document.getElementById("fName").focus(),200);
 }
 function editItem(id){
   const item=state.items.find(i=>i.id===id);if(!item)return;
