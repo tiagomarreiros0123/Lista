@@ -15,6 +15,7 @@
   --danger:#c0392b;--danger-bg:#fdf2f2;
   --success:#2d7a4a;--success-bg:#f0f9f4;
   --warn:#c07a1a;--warn-bg:#fdf6e8;
+  --info:#2563eb;--info-bg:#eff6ff;
   --sh:0 2px 16px rgba(42,33,24,.07);--sh-lg:0 8px 40px rgba(42,33,24,.13);
   --r:12px;--fd:'Cormorant Garamond',Georgia,serif;--fb:'DM Sans',system-ui,sans-serif;
   --header-h:64px;
@@ -23,18 +24,15 @@
 html{-webkit-text-size-adjust:100%}
 body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.6;overflow-x:hidden}
 
-/* ── Loading ─────────────────────────── */
 #loadingOverlay{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;gap:1rem}
 .spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 #loadingOverlay p{font-family:var(--fd);font-size:1.1rem;font-style:italic;color:var(--muted)}
 
-/* ── Sync badge ──────────────────────── */
 .sync-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:var(--success);background:var(--success-bg);border:1px solid #a8d5bb;border-radius:99px;padding:3px 10px;font-weight:500;white-space:nowrap}
 .sync-badge.syncing{color:var(--warn);background:var(--warn-bg);border-color:#f0cc88}
 .sync-badge.error{color:var(--danger);background:var(--danger-bg);border-color:#f0b8b8}
 
-/* ── Header ──────────────────────────── */
 header{
   background:var(--card);border-bottom:1px solid var(--border);
   padding:.9rem 1.25rem;display:flex;align-items:center;
@@ -49,20 +47,17 @@ header{
 .h-right label{font-size:11px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:.08em;display:none}
 .h-right input[type=date]{border:1px solid var(--border-s);border-radius:8px;padding:5px 9px;font-family:var(--fb);font-size:13px;color:var(--text);background:var(--bg);cursor:pointer;outline:none;max-width:145px}
 
-/* ── Countdown ───────────────────────── */
 .countdown{background:linear-gradient(135deg,var(--accent) 0%,#d4a574 100%);color:#fff;text-align:center;padding:.5rem 1rem;font-size:13px;letter-spacing:.04em;font-weight:500;line-height:1.4}
 
-/* ── Container ───────────────────────── */
 .container{max-width:1100px;margin:0 auto;padding:1.25rem 1rem}
 
-/* ── Couple bar ──────────────────────── */
 .couple-bar{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1rem 1.25rem;margin-bottom:1.25rem;box-shadow:var(--sh);display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}
 .couple-bar .lbl{font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;white-space:nowrap}
 .couple-bar input{flex:1;min-width:100px;border:1px solid var(--border-s);border-radius:8px;padding:7px 12px;font-family:var(--fd);font-size:1.05rem;color:var(--text);background:var(--bg);outline:none;transition:border-color .15s}
 .couple-bar input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(176,125,74,.1)}
 .couple-and{font-family:var(--fd);font-size:1.3rem;font-style:italic;color:var(--accent);flex-shrink:0}
 
-/* ── Summary grid ────────────────────── */
+/* summary — agora 6 cards em 3 colunas no mobile, 6 no desktop */
 .summary-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem;margin-bottom:1.25rem}
 .sc{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1rem 1.1rem;box-shadow:var(--sh)}
 .sc .lbl{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:500;margin-bottom:.25rem}
@@ -71,12 +66,18 @@ header{
 .sc.ca{border-color:var(--accent)}.sc.ca .val{color:var(--accent)}
 .sc.cd{border-color:var(--danger);background:var(--danger-bg)}.sc.cd .val{color:var(--danger)}
 .sc.cs{border-color:var(--success);background:var(--success-bg)}.sc.cs .val{color:var(--success)}
+.sc.ci{border-color:var(--info);background:var(--info-bg)}.sc.ci .val{color:var(--info)}
 .budget-row{display:flex;align-items:center;gap:6px;margin-top:6px;flex-wrap:wrap}
 .budget-row input{width:120px;border:1px solid var(--border-s);border-radius:8px;padding:4px 9px;font-family:var(--fb);font-size:13px;color:var(--text);background:var(--bg);outline:none}
 .budget-row input:focus{border-color:var(--accent)}
 .budget-row span{font-size:11px;color:var(--muted)}
 
-/* ── Progress ────────────────────────── */
+/* mini barra de pagamento dentro do card */
+.pay-mini{margin-top:7px}
+.pay-mini .pay-track{background:var(--border);border-radius:99px;height:5px;overflow:hidden;margin-top:3px}
+.pay-mini .pay-fill{height:100%;border-radius:99px;background:#2d7a4a;transition:width .4s}
+.pay-mini .pay-lbl{font-size:10px;color:var(--muted)}
+
 .progress-sec{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.1rem 1.25rem;margin-bottom:1.25rem;box-shadow:var(--sh)}
 .progress-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:.65rem}
 .progress-hd h3{font-family:var(--fd);font-size:1rem;font-weight:400}
@@ -85,7 +86,6 @@ header{
 .progress-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--accent),#d4a574);transition:width .5s ease}
 .progress-fill.over{background:linear-gradient(90deg,var(--danger),#e74c3c)}
 
-/* ── Chart ───────────────────────────── */
 .chart-sec{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;margin-bottom:1.25rem;box-shadow:var(--sh)}
 .chart-sec h3{font-family:var(--fd);font-size:1.05rem;font-weight:400;margin-bottom:.9rem}
 .chart-bars{display:flex;flex-direction:column;gap:9px}
@@ -95,29 +95,26 @@ header{
 .cbf{height:100%;border-radius:99px;transition:width .4s ease}
 .cbv{font-size:12px;color:var(--muted);font-weight:500;text-align:right;white-space:nowrap}
 
-/* ── Section header ──────────────────── */
 .sec-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.75rem}
 .sec-hd h2{font-family:var(--fd);font-size:1.4rem;font-weight:400}
 
-/* ── Buttons ─────────────────────────── */
 .btn{display:inline-flex;align-items:center;gap:5px;padding:8px 16px;border-radius:8px;font-family:var(--fb);font-size:14px;font-weight:500;cursor:pointer;border:none;transition:all .15s;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .btn-p{background:var(--accent);color:#fff}.btn-p:hover,.btn-p:active{background:var(--accent-d)}
 .btn-o{background:transparent;color:var(--accent);border:1px solid var(--accent)}.btn-o:hover{background:var(--accent-l)}
 .btn-g{background:transparent;color:var(--muted);border:1px solid var(--border)}.btn-g:hover{background:var(--border);color:var(--text)}
 .btn-d{background:transparent;color:var(--danger);border:1px solid #e8bfbf}.btn-d:hover{background:var(--danger-bg)}
+.btn-i{background:transparent;color:var(--info);border:1px solid #bdd0f8}.btn-i:hover{background:var(--info-bg)}
 .btn-sm{padding:6px 10px;font-size:12px}
 
-/* ── Tabs ────────────────────────────── */
 .tabs{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.9rem;overflow-x:auto;padding-bottom:2px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
 .tab{padding:5px 13px;border-radius:99px;font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:var(--card);color:var(--muted);transition:all .15s;white-space:nowrap;flex-shrink:0;touch-action:manipulation}
 .tab:active{transform:scale(.97)}
 .tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
 
-/* ── Table (desktop) ─────────────────── */
 .tbl-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden}
 .tbl-desktop{display:block;overflow-x:auto}
-.tbl-desktop table{width:100%;border-collapse:collapse;min-width:580px}
+.tbl-desktop table{width:100%;border-collapse:collapse;min-width:680px}
 .tbl-desktop thead th{background:var(--accent-l);color:var(--accent-d);font-size:10px;text-transform:uppercase;letter-spacing:.1em;font-weight:500;padding:.8rem 1rem;text-align:left;white-space:nowrap}
 .tbl-desktop tbody tr{border-top:1px solid var(--border);transition:background .1s}
 .tbl-desktop tbody tr:hover{background:var(--accent-l)}
@@ -126,7 +123,12 @@ header{
 .td-val{font-family:var(--fd);font-size:.95rem;font-weight:600;white-space:nowrap}
 .td-act{display:flex;gap:4px;flex-wrap:nowrap}
 
-/* ── Cards (mobile list) ─────────────── */
+/* mini barra de pagamento na tabela */
+.pay-bar-wrap{display:flex;flex-direction:column;gap:3px;min-width:80px}
+.pay-bar-track{background:var(--border);border-radius:99px;height:5px;overflow:hidden}
+.pay-bar-fill{height:100%;border-radius:99px;background:var(--success);transition:width .4s}
+.pay-bar-txt{font-size:11px;color:var(--muted)}
+
 .cards-list{display:none;flex-direction:column;gap:.65rem;padding:.75rem}
 .item-card{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:.85rem 1rem;display:flex;flex-direction:column;gap:.55rem}
 .ic-top{display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem}
@@ -136,23 +138,28 @@ header{
 .ic-val-item{display:flex;flex-direction:column}
 .ic-val-item .lbl{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:500}
 .ic-val-item .val{font-family:var(--fd);font-size:1rem;font-weight:600}
+
+/* barra de pagamento no card mobile */
+.ic-pay{display:flex;flex-direction:column;gap:3px;width:100%}
+.ic-pay-hd{display:flex;justify-content:space-between;font-size:11px;color:var(--muted)}
+.ic-pay-track{background:var(--border);border-radius:99px;height:6px;overflow:hidden}
+.ic-pay-fill{height:100%;border-radius:99px;background:var(--success);transition:width .4s}
+
 .ic-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.4rem}
 .ic-cat{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--muted)}
 .ic-actions{display:flex;gap:.35rem}
 
-/* ── Badge ───────────────────────────── */
 .badge{display:inline-block;padding:3px 9px;border-radius:99px;font-size:11px;font-weight:500;white-space:nowrap}
 .b-paid{background:var(--success-bg);color:var(--success);border:1px solid #a8d5bb}
 .b-pend{background:var(--warn-bg);color:var(--warn);border:1px solid #f0cc88}
 .b-over{background:var(--danger-bg);color:var(--danger);border:1px solid #f0b8b8}
+.b-part{background:var(--info-bg);color:var(--info);border:1px solid #bdd0f8}
 .dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:4px}
 
-/* ── Empty state ─────────────────────── */
 .empty{text-align:center;padding:2.5rem 1rem;color:var(--muted)}
 .empty .icon{font-size:2.5rem;margin-bottom:.65rem;opacity:.35}
 .empty p{font-family:var(--fd);font-size:1.1rem;font-style:italic;margin-bottom:.9rem}
 
-/* ── Modal ───────────────────────────── */
 .modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.42);z-index:200;align-items:flex-end;justify-content:center;padding:0}
 .modal-ov.open{display:flex}
 .modal{background:var(--card);border-radius:20px 20px 0 0;padding:1.5rem 1.25rem 2rem;width:100%;max-width:100%;box-shadow:var(--sh-lg);animation:slideUp .22s ease;max-height:92vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
@@ -164,48 +171,46 @@ header{
 .fg input,.fg select,.fg textarea{width:100%;padding:10px 13px;border:1px solid var(--border-s);border-radius:8px;font-family:var(--fb);font-size:15px;color:var(--text);background:var(--bg);outline:none;transition:border-color .15s;-webkit-appearance:none;appearance:none}
 .fg input:focus,.fg select:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(176,125,74,.1)}
 .fr{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.fg-divider{border-top:1px solid var(--border);margin:.5rem 0 1rem;position:relative}
+.fg-divider span{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--card);padding:0 10px;font-size:11px;color:var(--muted);white-space:nowrap;font-weight:500;text-transform:uppercase;letter-spacing:.08em}
 .modal-ft{display:flex;justify-content:flex-end;gap:.65rem;margin-top:1.25rem;padding-top:1.1rem;border-top:1px solid var(--border)}
 .modal-ft .btn{flex:1}
 
-/* ── Notes ───────────────────────────── */
+/* destaque no campo de pagamento parcial */
+.pay-highlight{background:var(--info-bg);border-radius:10px;padding:.75rem 1rem;margin-bottom:.85rem;border:1px solid #bdd0f8}
+.pay-highlight .fg{margin-bottom:0}
+.pay-highlight .lbl-info{font-size:11px;color:var(--info);margin-top:.3rem}
+
 .notes-sec{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;margin-top:1.25rem;box-shadow:var(--sh)}
 .notes-sec h3{font-family:var(--fd);font-size:1.05rem;font-weight:400;margin-bottom:.65rem}
 .notes-sec textarea{width:100%;min-height:75px;border:1px solid var(--border);border-radius:8px;padding:10px 13px;font-family:var(--fb);font-size:14px;color:var(--text);background:var(--bg);resize:vertical;outline:none;transition:border-color .15s}
 .notes-sec textarea:focus{border-color:var(--accent)}
 
-/* ── Footer ──────────────────────────── */
 footer{text-align:center;padding:1.5rem 1rem;color:var(--muted);border-top:1px solid var(--border);margin-top:1.5rem;font-family:var(--fd);font-size:.95rem;font-style:italic}
 
-/* ── FAB (mobile add button) ─────────── */
 .fab{display:none;position:fixed;bottom:1.5rem;right:1.25rem;z-index:90;background:var(--accent);color:#fff;border:none;border-radius:50%;width:54px;height:54px;font-size:1.5rem;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(176,125,74,.45);cursor:pointer;touch-action:manipulation}
 .fab:active{transform:scale(.93)}
 
-/* ================================================================
-   RESPONSIVE BREAKPOINTS
-================================================================ */
-
-/* ── Tablet (≥768px) ─────────────────── */
 @media(min-width:768px){
   .h-right label{display:block}
-  .summary-grid{grid-template-columns:repeat(4,1fr)}
+  .summary-grid{grid-template-columns:repeat(3,1fr)}
   .sc .val{font-size:1.75rem}
   .container{padding:1.5rem 1.5rem}
   .modal-ov{align-items:center;padding:1rem}
-  .modal{border-radius:16px;max-width:520px;padding:2rem}
+  .modal{border-radius:16px;max-width:560px;padding:2rem}
   .modal-handle{display:none}
   .modal-ft .btn{flex:none}
 }
 
-/* ── Desktop (≥1024px) ───────────────── */
 @media(min-width:1024px){
   .h-left h1{font-size:1.9rem}
   .h-left span{font-size:1.05rem;max-width:none}
-  .h-right input[type=date]{font-size:14px}
+  .summary-grid{grid-template-columns:repeat(6,1fr)}
+  .sc .val{font-size:1.4rem}
   .container{padding:2rem}
   .cbr{grid-template-columns:130px 1fr 95px}
 }
 
-/* ── Mobile only (< 640px) ───────────── */
 @media(max-width:639px){
   .summary-grid{grid-template-columns:1fr 1fr}
   .sc .val{font-size:1.35rem}
@@ -213,7 +218,7 @@ footer{text-align:center;padding:1.5rem 1rem;color:var(--muted);border-top:1px s
   .tbl-desktop{display:none}
   .cards-list{display:flex}
   .fab{display:flex}
-  .sec-hd .btn-p{display:none} /* hide desktop add btn, use FAB instead */
+  .sec-hd .btn-p{display:none}
   .cbr{grid-template-columns:80px 1fr 65px}
   .cbl{font-size:11px}
   .cbv{font-size:11px}
@@ -222,7 +227,6 @@ footer{text-align:center;padding:1.5rem 1rem;color:var(--muted);border-top:1px s
   .couple-bar input{min-width:80px;font-size:1rem}
 }
 
-/* ── Very small (< 360px) ────────────── */
 @media(max-width:359px){
   .summary-grid{grid-template-columns:1fr}
   .h-left h1{font-size:1.35rem}
@@ -277,13 +281,25 @@ footer{text-align:center;padding:1.5rem 1rem;color:var(--muted);border-top:1px s
       <div class="val" id="summLeft">R$ 0</div>
       <div class="sub" id="summLeftSub">—</div>
     </div>
+    <!-- NOVOS CARDS DE PAGAMENTO -->
+    <div class="sc ci">
+      <div class="lbl">Total Já Pago</div>
+      <div class="val" id="summPaidAmount">R$ 0</div>
+      <div class="sub" id="summPaidSub">de parcelas e pagamentos</div>
+    </div>
     <div class="sc">
-      <div class="lbl">Total Pago</div>
-      <div class="val" id="summPaid">R$ 0</div>
-      <div class="sub" id="summPaidSub">a pagar: R$ 0</div>
+      <div class="lbl">Ainda a Pagar</div>
+      <div class="val" id="summRemaining">R$ 0</div>
+      <div class="sub" id="summRemainingSub">valor restante</div>
+    </div>
+    <div class="sc">
+      <div class="lbl">Itens Quitados</div>
+      <div class="val" id="summFullyPaid">0</div>
+      <div class="sub" id="summFullyPaidSub">totalmente pagos</div>
     </div>
   </div>
 
+  <!-- Barra de progresso do orçamento -->
   <div class="progress-sec">
     <div class="progress-hd">
       <h3>Orçamento utilizado</h3>
@@ -291,6 +307,17 @@ footer{text-align:center;padding:1.5rem 1rem;color:var(--muted);border-top:1px s
     </div>
     <div class="progress-track">
       <div class="progress-fill" id="progressFill" style="width:0%"></div>
+    </div>
+  </div>
+
+  <!-- Barra de progresso dos pagamentos -->
+  <div class="progress-sec">
+    <div class="progress-hd">
+      <h3>💳 Progresso dos pagamentos</h3>
+      <span id="payProgressPct">—</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="payProgressFill" style="width:0%;background:linear-gradient(90deg,#2d7a4a,#4aaa6a)"></div>
     </div>
   </div>
 
@@ -308,20 +335,18 @@ footer{text-align:center;padding:1.5rem 1rem;color:var(--muted);border-top:1px s
 
   <div class="tabs" id="tabs"></div>
 
-  <!-- Desktop table -->
   <div class="tbl-wrap">
     <div class="tbl-desktop">
       <table>
         <thead>
           <tr>
             <th>Item</th><th>Categoria</th><th>Valor Est.</th>
-            <th>Valor Real</th><th>Vencimento</th><th>Status</th><th>Ações</th>
+            <th>Valor Real</th><th>Já Pago</th><th>Restante</th><th>Vencimento</th><th>Status</th><th>Ações</th>
           </tr>
         </thead>
         <tbody id="tbody"></tbody>
       </table>
     </div>
-    <!-- Mobile cards -->
     <div class="cards-list" id="cardsList"></div>
   </div>
 
@@ -333,7 +358,6 @@ footer{text-align:center;padding:1.5rem 1rem;color:var(--muted);border-top:1px s
 
 <footer>Feito com amor para o dia mais especial ✨</footer>
 
-<!-- FAB mobile -->
 <button class="fab" onclick="openModal()" aria-label="Adicionar item">+</button>
 
 <!-- MODAL -->
@@ -341,6 +365,7 @@ footer{text-align:center;padding:1.5rem 1rem;color:var(--muted);border-top:1px s
   <div class="modal">
     <div class="modal-handle"></div>
     <h2 id="modalTitle">Adicionar item</h2>
+
     <div class="fr">
       <div class="fg"><label>Nome do item *</label><input type="text" id="fName" placeholder="Ex: Vestido de noiva"></div>
       <div class="fg"><label>Categoria *</label>
@@ -352,17 +377,36 @@ footer{text-align:center;padding:1.5rem 1rem;color:var(--muted);border-top:1px s
         </select>
       </div>
     </div>
+
     <div class="fr">
       <div class="fg"><label>Valor estimado (R$) *</label><input type="number" id="fEst" placeholder="0,00" step="0.01" min="0" inputmode="decimal"></div>
-      <div class="fg"><label>Valor real (R$)</label><input type="number" id="fReal" placeholder="0,00" step="0.01" min="0" inputmode="decimal"></div>
+      <div class="fg"><label>Valor real / total (R$)</label><input type="number" id="fReal" placeholder="0,00" step="0.01" min="0" inputmode="decimal"></div>
     </div>
+
+    <!-- SEÇÃO DE PAGAMENTOS -->
+    <div class="fg-divider"><span>💳 Controle de Pagamento</span></div>
+
+    <div class="pay-highlight">
+      <div class="fg">
+        <label>Quanto já foi pago? (R$)</label>
+        <input type="number" id="fPaid" placeholder="0,00" step="0.01" min="0" inputmode="decimal" oninput="updatePayPreview()">
+      </div>
+      <div class="lbl-info" id="payPreview" style="display:none"></div>
+    </div>
+
     <div class="fr">
       <div class="fg"><label>Vencimento</label><input type="date" id="fDue"></div>
       <div class="fg"><label>Status</label>
-        <select id="fStatus"><option value="pending">Pendente</option><option value="paid">Pago</option></select>
+        <select id="fStatus" onchange="onStatusChange()">
+          <option value="pending">Pendente</option>
+          <option value="partial">Parcialmente pago</option>
+          <option value="paid">Pago (quitado)</option>
+        </select>
       </div>
     </div>
+
     <div class="fg"><label>Fornecedor / Observação</label><input type="text" id="fNote" placeholder="Nome do fornecedor ou observação"></div>
+
     <div class="modal-ft">
       <button class="btn btn-g" onclick="closeModal()">Cancelar</button>
       <button class="btn btn-p" onclick="saveItem()">Salvar</button>
@@ -371,10 +415,8 @@ footer{text-align:center;padding:1.5rem 1rem;color:var(--muted);border-top:1px s
 </div>
 
 <script>
-// ================================================================
 const MASTER_KEY = "$2a$10$H8/dbUWlIFxYwYbkKH/iwuYxlNFW1ycU9EmaWExCh7/XVeVCe1C3O";
 const BIN_ID_FIXO = "69fba166c0954111d8e82c4d";
-// ================================================================
 
 const API = "https://api.jsonbin.io/v3";
 let BIN_ID = BIN_ID_FIXO || localStorage.getItem("jb_bin_casamento") || "";
@@ -421,6 +463,8 @@ async function init(){
     if(!BIN_ID) await createBin();
     const data = await readBin();
     state = {settings:data.settings||{}, items:data.items||[]};
+    // migração: itens antigos sem campo paid recebem paid=null
+    state.items.forEach(i=>{ if(i.paid===undefined) i.paid=null; });
     applySettings();
     render();
   } catch(e){
@@ -479,48 +523,110 @@ function updateCountdown(){
   else if(diff===1) bar.textContent="Falta apenas 1 dia! 💕";
   else              bar.textContent=`Faltam ${diff} dias para o casamento 💕`;
 }
+
 function fmt(v){return "R$ "+Number(v||0).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2});}
-function fmtShort(v){
-  const n=Number(v||0);
-  if(n>=1000) return "R$ "+Math.round(n/1000)+"k";
-  return "R$ "+n.toLocaleString("pt-BR",{minimumFractionDigits:0,maximumFractionDigits:0});
-}
 function fmtDate(d){if(!d)return "—";const p=d.split("-");return p[2]+"/"+p[1]+"/"+p[0];}
+
+// valor efetivo do item (real se informado, senão estimado)
+function itemValue(item){ return parseFloat(item.real||item.est)||0; }
+// valor já pago do item
+function itemPaid(item){ return parseFloat(item.paid)||0; }
+// restante a pagar do item
+function itemRemaining(item){ return Math.max(0, itemValue(item) - itemPaid(item)); }
+// percentual pago
+function itemPaidPct(item){
+  const v=itemValue(item);
+  if(!v) return 0;
+  return Math.min(100, (itemPaid(item)/v)*100);
+}
+
 function isOverdue(item){
   if(item.status==="paid"||!item.due)return false;
   const today=new Date();today.setHours(0,0,0,0);
   return new Date(item.due+"T00:00:00")<today;
 }
 
+// Atualiza prévia de pagamento no modal
+function updatePayPreview(){
+  const paidVal = parseFloat(document.getElementById("fPaid").value)||0;
+  const realVal = parseFloat(document.getElementById("fReal").value)||0;
+  const estVal  = parseFloat(document.getElementById("fEst").value)||0;
+  const total   = realVal || estVal;
+  const preview = document.getElementById("payPreview");
+  if(paidVal>0 && total>0){
+    const remaining = Math.max(0, total - paidVal);
+    const pct = Math.min(100, Math.round(paidVal/total*100));
+    preview.style.display="block";
+    preview.textContent = `${pct}% pago • Restante: ${fmt(remaining)}`;
+    // auto status
+    if(paidVal >= total) document.getElementById("fStatus").value="paid";
+    else if(paidVal > 0) document.getElementById("fStatus").value="partial";
+    else document.getElementById("fStatus").value="pending";
+  } else {
+    preview.style.display="none";
+  }
+}
+
+function onStatusChange(){
+  const status = document.getElementById("fStatus").value;
+  if(status==="paid"){
+    // se marcar quitado e não tem valor pago, preenche com o valor total
+    const paidField = document.getElementById("fPaid");
+    if(!paidField.value){
+      const realVal = parseFloat(document.getElementById("fReal").value)||0;
+      const estVal  = parseFloat(document.getElementById("fEst").value)||0;
+      paidField.value = (realVal||estVal)||"";
+    }
+    updatePayPreview();
+  }
+}
+
 function render(){
   const items=state.items;
   const budget=parseFloat(document.getElementById("budgetInput").value)||0;
   const filtered=activeTab==="Todos"?items:items.filter(i=>i.cat===activeTab);
-  const total=items.reduce((s,i)=>s+(parseFloat(i.real||i.est)||0),0);
-  const paid=items.filter(i=>i.status==="paid").reduce((s,i)=>s+(parseFloat(i.real||i.est)||0),0);
+
+  const total=items.reduce((s,i)=>s+itemValue(i),0);
+  const totalPaid=items.reduce((s,i)=>s+itemPaid(i),0);
+  const totalRemaining=items.reduce((s,i)=>s+itemRemaining(i),0);
+  const fullyPaid=items.filter(i=>i.status==="paid").length;
   const left=budget-total;
 
   document.getElementById("summBudget").textContent=fmt(budget);
   document.getElementById("summSpent").textContent=fmt(total);
   document.getElementById("summSpentSub").textContent=items.length+" ite"+(items.length===1?"m":"ns");
-  document.getElementById("summPaid").textContent=fmt(paid);
-  document.getElementById("summPaidSub").textContent="a pagar: "+fmt(total-paid);
   document.getElementById("summLeft").textContent=fmt(Math.abs(left));
   document.getElementById("summLeftSub").textContent=left<0?"acima do orçamento":budget>0?"dentro do orçamento":"defina o orçamento";
   document.getElementById("summLeftCard").className="sc "+(left<0&&budget>0?"cd":"cs");
 
+  // novos cards
+  document.getElementById("summPaidAmount").textContent=fmt(totalPaid);
+  document.getElementById("summPaidSub").textContent=`de ${fmt(total)} lançados`;
+  document.getElementById("summRemaining").textContent=fmt(totalRemaining);
+  document.getElementById("summRemainingSub").textContent=totalRemaining>0?"ainda a ser pago":"tudo quitado! 🎉";
+  document.getElementById("summFullyPaid").textContent=fullyPaid;
+  document.getElementById("summFullyPaidSub").textContent=`de ${items.length} ite${items.length===1?"m":"ns"}`;
+
+  // progresso orçamento
   const pct=budget>0?Math.min((total/budget)*100,100):0;
   document.getElementById("progressFill").style.width=pct+"%";
   document.getElementById("progressFill").className="progress-fill"+(total>budget&&budget>0?" over":"");
   document.getElementById("progressPct").textContent=budget>0?Math.round((total/budget)*100)+"%":"—";
 
+  // progresso pagamentos
+  const payPct=total>0?Math.min((totalPaid/total)*100,100):0;
+  document.getElementById("payProgressFill").style.width=payPct+"%";
+  document.getElementById("payProgressPct").textContent=total>0?Math.round(payPct)+"% pago":"—";
+
+  // tabs
   const cats=["Todos",...Object.keys(CATS).filter(c=>items.some(i=>i.cat===c))];
   document.getElementById("tabs").innerHTML=cats.map(c=>
     `<div class="tab ${c===activeTab?'active':''}" onclick="setTab('${c}')">${c} (${c==='Todos'?items.length:items.filter(i=>i.cat===c).length})</div>`
   ).join("");
 
+  // chart
   const catT={};
-  items.forEach(i=>{const v=parseFloat(i.real||i.est)||0;catT[i.cat]=(catT[i.cat]||0)+v;});
+  items.forEach(i=>{const v=itemValue(i);catT[i.cat]=(catT[i.cat]||0)+v;});
   const entries=Object.entries(catT).sort((a,b)=>b[1]-a[1]);
   const maxV=Math.max(...entries.map(e=>e[1]),1);
   document.getElementById("chartBars").innerHTML=entries.length===0
@@ -535,23 +641,36 @@ function render(){
   // ── Desktop table ──
   const tbody=document.getElementById("tbody");
   if(filtered.length===0){
-    tbody.innerHTML=`<tr><td colspan="7"><div class="empty"><div class="icon">💐</div><p>Nenhum item${activeTab!=='Todos'?' nesta categoria':''}</p></div></td></tr>`;
+    tbody.innerHTML=`<tr><td colspan="9"><div class="empty"><div class="icon">💐</div><p>Nenhum item${activeTab!=='Todos'?' nesta categoria':''}</p></div></td></tr>`;
   } else {
     tbody.innerHTML=filtered.map(item=>{
       const over=isOverdue(item);
-      const badge=item.status==="paid"?`<span class="badge b-paid">✓ Pago</span>`:over?`<span class="badge b-over">⚠ Vencido</span>`:`<span class="badge b-pend">⏳ Pendente</span>`;
+      const badge=statusBadge(item,over);
       const rc=item.real&&parseFloat(item.real)>parseFloat(item.est)?"color:var(--danger)":"";
+      const paid=itemPaid(item);
+      const remaining=itemRemaining(item);
+      const paidPct=itemPaidPct(item);
+      const total=itemValue(item);
+
+      const payBarHtml=total>0?`
+        <div class="pay-bar-wrap">
+          <div class="pay-bar-track"><div class="pay-bar-fill" style="width:${paidPct.toFixed(1)}%"></div></div>
+          <div class="pay-bar-txt">${fmt(paid)} <span style="color:var(--border-s)">/ ${fmt(total)}</span></div>
+        </div>`:`<span style="font-size:12px;color:var(--muted)">—</span>`;
+
       return `<tr>
         <td class="td-name">${item.name}${item.note?`<br><span style="font-size:11px;color:var(--muted);font-weight:400">${item.note}</span>`:""}</td>
         <td><span class="dot" style="background:${CATS[item.cat]||'#888'}"></span>${item.cat}</td>
         <td class="td-val">${fmt(item.est)}</td>
         <td class="td-val" style="${rc}">${item.real?fmt(item.real):"—"}</td>
+        <td>${payBarHtml}</td>
+        <td class="td-val" style="${remaining>0?'color:var(--warn)':'color:var(--success)'}">${remaining>0?fmt(remaining):'<span style="font-size:12px">✓ Quitado</span>'}</td>
         <td>${fmtDate(item.due)}</td>
         <td>${badge}</td>
         <td class="td-act">
           <button class="btn btn-o btn-sm" onclick="editItem('${item.id}')">✏️</button>
           <button class="btn btn-d btn-sm" onclick="deleteItem('${item.id}')">🗑</button>
-          ${item.status!=="paid"?`<button class="btn btn-g btn-sm" onclick="togglePaid('${item.id}')" title="Marcar como pago">✓</button>`:""}
+          ${item.status!=="paid"?`<button class="btn btn-g btn-sm" onclick="togglePaid('${item.id}')" title="Marcar como quitado">✓</button>`:""}
         </td>
       </tr>`;
     }).join("");
@@ -564,8 +683,22 @@ function render(){
   } else {
     cardsList.innerHTML=filtered.map(item=>{
       const over=isOverdue(item);
-      const badge=item.status==="paid"?`<span class="badge b-paid">✓ Pago</span>`:over?`<span class="badge b-over">⚠ Vencido</span>`:`<span class="badge b-pend">⏳ Pendente</span>`;
+      const badge=statusBadge(item,over);
       const rc=item.real&&parseFloat(item.real)>parseFloat(item.est)?"color:var(--danger)":"";
+      const paid=itemPaid(item);
+      const remaining=itemRemaining(item);
+      const paidPct=itemPaidPct(item);
+      const total=itemValue(item);
+
+      const paySection=total>0?`
+        <div class="ic-pay">
+          <div class="ic-pay-hd">
+            <span>💳 Pago: ${fmt(paid)}</span>
+            <span>Restante: ${remaining>0?fmt(remaining):'<b style="color:var(--success)">Quitado ✓</b>'}</span>
+          </div>
+          <div class="ic-pay-track"><div class="ic-pay-fill" style="width:${paidPct.toFixed(1)}%"></div></div>
+        </div>`:"";
+
       return `<div class="item-card">
         <div class="ic-top">
           <div>
@@ -588,17 +721,25 @@ function render(){
             <span class="val" style="font-size:.85rem">${fmtDate(item.due)}</span>
           </div>`:""}
         </div>
+        ${paySection}
         <div class="ic-footer">
           <span class="ic-cat"><span class="dot" style="background:${CATS[item.cat]||'#888'}"></span>${item.cat}</span>
           <div class="ic-actions">
             <button class="btn btn-o btn-sm" onclick="editItem('${item.id}')">✏️</button>
             <button class="btn btn-d btn-sm" onclick="deleteItem('${item.id}')">🗑</button>
-            ${item.status!=="paid"?`<button class="btn btn-g btn-sm" onclick="togglePaid('${item.id}')" title="Marcar como pago">✓</button>`:""}
+            ${item.status!=="paid"?`<button class="btn btn-g btn-sm" onclick="togglePaid('${item.id}')" title="Marcar como quitado">✓</button>`:""}
           </div>
         </div>
       </div>`;
     }).join("");
   }
+}
+
+function statusBadge(item, over){
+  if(item.status==="paid") return `<span class="badge b-paid">✓ Quitado</span>`;
+  if(item.status==="partial") return `<span class="badge b-part">⬛ Parcial</span>`;
+  if(over) return `<span class="badge b-over">⚠ Vencido</span>`;
+  return `<span class="badge b-pend">⏳ Pendente</span>`;
 }
 
 function setTab(t){activeTab=t;render();}
@@ -607,12 +748,14 @@ function genId(){return Date.now().toString(36)+Math.random().toString(36).slice
 function openModal(){
   editingId=null;
   document.getElementById("modalTitle").textContent="Adicionar item";
-  ["fName","fEst","fReal","fDue","fNote"].forEach(id=>document.getElementById(id).value="");
+  ["fName","fEst","fReal","fPaid","fDue","fNote"].forEach(id=>document.getElementById(id).value="");
   document.getElementById("fCat").value="Cerimônia";
   document.getElementById("fStatus").value="pending";
+  document.getElementById("payPreview").style.display="none";
   document.getElementById("modalOv").classList.add("open");
   setTimeout(()=>document.getElementById("fName").focus(),200);
 }
+
 function editItem(id){
   const item=state.items.find(i=>i.id===id);if(!item)return;
   editingId=id;
@@ -621,11 +764,14 @@ function editItem(id){
   document.getElementById("fCat").value=item.cat;
   document.getElementById("fEst").value=item.est;
   document.getElementById("fReal").value=item.real||"";
+  document.getElementById("fPaid").value=item.paid||"";
   document.getElementById("fDue").value=item.due||"";
   document.getElementById("fStatus").value=item.status;
   document.getElementById("fNote").value=item.note||"";
   document.getElementById("modalOv").classList.add("open");
+  updatePayPreview();
 }
+
 function closeModal(){document.getElementById("modalOv").classList.remove("open");}
 function closeModalOutside(e){if(e.target===document.getElementById("modalOv"))closeModal();}
 
@@ -634,27 +780,48 @@ function saveItem(){
   const est=document.getElementById("fEst").value;
   if(!name){alert("Informe o nome do item.");return;}
   if(!est){alert("Informe o valor estimado.");return;}
+
+  const estVal=parseFloat(est);
+  const realVal=document.getElementById("fReal").value?parseFloat(document.getElementById("fReal").value):null;
+  const paidVal=document.getElementById("fPaid").value?parseFloat(document.getElementById("fPaid").value):null;
+  let status=document.getElementById("fStatus").value;
+
+  // auto-status: se pago >= total, força "paid"
+  const total=realVal||estVal;
+  if(paidVal&&paidVal>=total) status="paid";
+  else if(paidVal&&paidVal>0&&status==="pending") status="partial";
+
   const data={
     id:editingId||genId(), name,
     cat:document.getElementById("fCat").value,
-    est:parseFloat(est),
-    real:document.getElementById("fReal").value?parseFloat(document.getElementById("fReal").value):null,
+    est:estVal,
+    real:realVal,
+    paid:paidVal,
     due:document.getElementById("fDue").value||null,
-    status:document.getElementById("fStatus").value,
+    status,
     note:document.getElementById("fNote").value.trim()
   };
   if(editingId){const idx=state.items.findIndex(i=>i.id===editingId);state.items[idx]=data;}
   else{state.items.push(data);}
   closeModal();render();scheduleSave();
 }
+
 function deleteItem(id){
   if(!confirm("Excluir este item?"))return;
   state.items=state.items.filter(i=>i.id!==id);
   render();scheduleSave();
 }
+
 function togglePaid(id){
   const item=state.items.find(i=>i.id===id);if(!item)return;
-  item.status=item.status==="paid"?"pending":"paid";
+  if(item.status==="paid"){
+    item.status="pending";
+    // não zera o valor pago ao desmarcar
+  } else {
+    item.status="paid";
+    // preenche valor pago com o total se não tiver
+    if(!item.paid) item.paid=itemValue(item);
+  }
   render();scheduleSave();
 }
 
